@@ -2,8 +2,10 @@
 /*
 Plugin Name: TLD WC Downloadable Product Update Emails
 Description: Inform customers when there is an update to products
+Version: 0.1.0-beta
 Author: Uriahs Victor
 Author URI: http://soaringleads.com
+License: GPL2
 */
 
 include_once('fields.php');
@@ -14,8 +16,6 @@ function tld_get_product_screen( $current_screen ) {
 	}
 }
 add_action( 'current_screen', 'tld_get_product_screen' );
-
-
 
 
 function tld_post_saved( $post_id ) {
