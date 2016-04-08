@@ -20,7 +20,7 @@ I Noticed that there's not a feature for this, or maybe I didn't look hard enoug
 <ul>
 <em>Better sending handling of emails</em><br />
 
-<li>Currently emails are sent within a loop on post save if "I updated download file" is checked, this behaviour will be changed to add a schedule even for each email.</li>
+<li>Currently emails are sent within a loop on post save if "I Updated The Download File" is checked, this behaviour will be changed to add a schedule even for each email.</li>
 </ul>
 # How to install
 
