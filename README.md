@@ -8,8 +8,9 @@ I Noticed that there's not a feature for this, or maybe I didn't look hard enoug
 
 -Plugin options page for settings such as:
 
---CUSTOM SMTP
---CUSTOM HTML EMAILS
+-CUSTOM SMTP
+-CUSTOM HTML EMAILS
+/**************/
 
 # How to install
 
