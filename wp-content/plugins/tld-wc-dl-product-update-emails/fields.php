@@ -1,4 +1,5 @@
 <?php
+define( 'ACF_LITE', true );
 include_once('advanced-custom-fields/acf.php');
 
 if(function_exists("register_field_group"))
