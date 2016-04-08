@@ -10,7 +10,7 @@ License: GPL2
 
 include_once('fields.php');
 
-//=================== BELOW IS TESTS FOR BETTER VERIFICATION, NOT YET WORKING ==============//
+//=================== BELOW ARE TESTS FOR BETTER VERIFICATION, NOT YET WORKING ==============//
 //$screen = "Edit Screen";
 function tld_get_product_screen( $current_screen ) {
 	if ( 'product' == $current_screen->post_type && 'post' == $current_screen->base ) {
