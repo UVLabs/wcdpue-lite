@@ -1,5 +1,4 @@
 <?php
-//define( 'ACF_LITE', false );
 include_once('advanced-custom-fields/acf.php');
 
 if(function_exists("register_field_group"))
@@ -23,7 +22,7 @@ if(function_exists("register_field_group"))
 				'default_value' => 'no',
 				'layout' => 'horizontal',
 			),
-			array (
+		/*	array (
 				'key' => 'field_56fe9cd6eaca4',
 				'label' => 'Product ID',
 				'name' => 'product_id',
@@ -47,7 +46,7 @@ if(function_exists("register_field_group"))
 				'min' => '',
 				'max' => '',
 				'step' => '',
-			),
+			),*/
 			array (
 				'key' => 'field_56fe9d96eaca6',
 				'label' => 'I Updated The Download File',
