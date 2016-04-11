@@ -1,0 +1,29 @@
+#tld-switch, #circle {
+  height: 50px;
+  transition: .4s;
+}
+
+#tld-switch {
+  width: 100px;
+  margin: 10px auto 0;
+  border: 2px solid #E8EAEC;
+  border-radius: 27px;
+  background: #FAFAFB;
+}
+
+#circle {
+  width: 50%;
+  border-radius: 25px;
+  box-shadow: 0 4px 4px rgba(26,53,71,.25), 0 0 0 1px rgba(26,53,71,.07);
+  background: #fff;
+}
+
+#tld-switch.active {
+  border-color: #41C955;
+  background: #52D468;
+}
+
+#tld-switch.active #circle {
+  -webkit-transform: translateX(100%);
+  transform: translateX(100%);
+}
