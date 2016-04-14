@@ -3,7 +3,7 @@
 Plugin Name: TLD WC Downloadable Product Update Emails
 Plugin URI: http://soaringleads.com
 Description: Inform customers when there is an update to their downloadable product.
-Version: 3.0.0-alpha
+Version: 3.0.1-alpha
 Author: Uriahs Victor
 Author URI: http://soaringleads.com
 License: GPL2
@@ -11,11 +11,8 @@ License: GPL2
 
 defined( 'ABSPATH' ) or die( 'Time for a U turn!' );
 //register JS
-function tld_load_assets($hook) {
+function tld_load_assets() {
 
-	if ( 'post.php' != $hook ) {
-		return;
-	}
 	wp_enqueue_script( 'tld_uilang', plugin_dir_url( __FILE__ ) . 'assets/js/uilang.js' );
 	wp_enqueue_script( 'tld_scripts', plugin_dir_url( __FILE__ ) . 'assets/js/tld-scripts.js?v1.0.0' );
 	wp_enqueue_style( 'tld_styles', plugin_dir_url( __FILE__ ) . 'assets/css/style.css?v1.0.0' );
@@ -42,6 +39,8 @@ function tld_dl_product_emails_metaboxes(){
 );
 }
 add_action('add_meta_boxes_product', 'tld_dl_product_emails_metaboxes', 10, 2);
+
+//echo $pagenow;
 
 function tld_metabox_fields(){
 	//way to little options to create a stylesheet imo
@@ -88,7 +87,8 @@ function tld_post_saved( $post_id ) {
 		global $wpdb;
 		$tld_tbl_prefix = $wpdb->prefix;
 		$tld_the_table = $tld_tbl_prefix . 'woocommerce_downloadable_product_permissions';
-		$query_result = $wpdb->get_results("SELECT * FROM $tld_the_table WHERE product_id=$post_id");
+
+		$query_result = $wpdb->get_results("SELECT * FROM $tld_the_table WHERE product_id=$post_id AND access_expires > NOW()");
 
 		foreach ( $query_result as $tld_email_address ){
 
@@ -100,8 +100,8 @@ function tld_post_saved( $post_id ) {
 			$tld_home_url = esc_url( home_url() );
 			$message .= $post_title . "\n\nDownload it from your account -> " . $tld_home_url . "/my-account";
 			wp_mail( $tld_the_email, $subject, $message );
-
-			//echo '<script>console.log("'.$tld_email_address->user_email.'")</script>';
+			usleep(500000); //sleep for 1/2 a second
+			//			echo '<script>console.log("'.$tld_email_address->user_email.'")</script>';
 		}
 
 	}

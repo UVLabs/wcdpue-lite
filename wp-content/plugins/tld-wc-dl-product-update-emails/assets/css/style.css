@@ -6,6 +6,7 @@
 #tld-switch {
   width: 100px;
   margin: 10px auto 0;
+  cursor: pointer;
   border: 2px solid #E8EAEC;
   border-radius: 27px;
   background: #FAFAFB;
