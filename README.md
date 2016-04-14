@@ -7,8 +7,7 @@ A simple plugin used to send emails to customers who bought a downloadable produ
 
 I Noticed that there's not a feature for this, or maybe I didn't look hard enough. But either way this is a plugin to add some basic functionality to your website.
 
-<img src="http://s15.postimg.org/fkcc10baj/clip1.png" />
-<img src="http://s15.postimg.org/x942smn1n/clip2.png" />
+<img src="http://s30.postimg.org/5c1uzwklt/product_emails.png" />
 
 # Plans
 
