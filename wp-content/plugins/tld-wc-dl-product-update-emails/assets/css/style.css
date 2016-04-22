@@ -28,3 +28,8 @@
   -webkit-transform: translateX(100%);
   transform: translateX(100%);
 }
+
+#meta-switch-label{
+font-size:12px;
+margin-bottom: 15px;
+}

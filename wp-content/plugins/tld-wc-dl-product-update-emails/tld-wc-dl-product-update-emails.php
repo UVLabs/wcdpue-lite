@@ -3,14 +3,28 @@
 Plugin Name: TLD WC Downloadable Product Update Emails
 Plugin URI: http://soaringleads.com
 Description: Inform customers when there is an update to their downloadable product.
-Version: 3.0.1-alpha
+Version: 3.1.0-alpha
 Author: Uriahs Victor
 Author URI: http://soaringleads.com
 License: GPL2
 */
 
 defined( 'ABSPATH' ) or die( 'Time for a U turn!' );
-//register JS
+
+//create db table
+require_once dirname( __FILE__ ) . '/includes/tld-table-setup.php';
+register_activation_hook( __FILE__, 'tld_wcdlprodmails_setup_table' );
+
+//setup schedule
+include dirname( __FILE__ ) . '/includes/tld-schedule-mail.php';
+register_activation_hook( __FILE__, 'tld_activate_schedule' );
+register_deactivation_hook(__FILE__, 'tld_deactivate_schedule');
+
+function tld_deactivate_schedule() {
+	wp_clear_scheduled_hook('tld_schedule_mail');
+}
+
+//register assets
 function tld_load_assets() {
 
 	wp_enqueue_script( 'tld_uilang', plugin_dir_url( __FILE__ ) . 'assets/js/uilang.js' );
@@ -20,15 +34,22 @@ function tld_load_assets() {
 }
 add_action( 'admin_enqueue_scripts', 'tld_load_assets' );
 
+//create 1.4 hour schedule
 
-//global $pagenow, $typenow;
-//var_dump($pagenow);
-//var_dump($typenow);
-//echo '<script>console.log("'.$product->get_type.'")</script>';
-//$bool = WC_Product::is_downloadable();
-//echo '<script>console.log("'.$bool.'")</script>';
+function tld_cron_quarter_hour($schedules){
+	$schedules['quaterly'] = array(
+
+		'interval' => 100,
+		'display' => __( 'Once Quater Hourly' )
+
+	);
+	return $schedules;
+}
+add_filter( 'cron_schedules', 'tld_cron_quarter_hour' );
+
 
 function tld_dl_product_emails_metaboxes(){
+
 	add_meta_box(
 	'tld_dl_product_emails_metabox',
 	'Product Email Options',
@@ -37,10 +58,24 @@ function tld_dl_product_emails_metaboxes(){
 	'side',
 	'high'
 );
+
 }
 add_action('add_meta_boxes_product', 'tld_dl_product_emails_metaboxes', 10, 2);
 
-//echo $pagenow;
+function tld_get_product_owners(){
+
+	global $wpdb;
+	$product_id = $_GET['post'];
+	$tld_tbl_prefix = $wpdb->prefix;
+	$tld_the_table = $tld_tbl_prefix . 'woocommerce_downloadable_product_permissions';
+	$query_result = $wpdb->get_var(
+	"SELECT COUNT(*)
+	FROM $tld_the_table
+	WHERE ( product_id=$product_id )
+	AND (access_expires > NOW() OR access_expires IS NULL )
+	");
+	echo $query_result;
+}
 
 function tld_metabox_fields(){
 	//way to little options to create a stylesheet imo
@@ -51,8 +86,8 @@ function tld_metabox_fields(){
 
 		<div>
 
-			<div>
-				<label for="tld-option-selected" style="font-size:12px; margin-bottom: 15px">Send Email About Updated File?</label>
+			<div style="text-align: center;">
+				<label for="tld-option-selected" id="meta-switch-label">Send product update email?</label>
 			</div>
 			<!-- /.tld-meta-head -->
 
@@ -60,6 +95,15 @@ function tld_metabox_fields(){
 
 			<div id='tld-switch' onclick="tld_cookie_business()">
 				<div id='circle'></div>
+			</div>
+
+			<div style="text-align: center;">
+				<p>User count: <?php tld_get_product_owners() ?></p>
+			</div>
+
+			<div style="text-align: center;">
+				<input type="radio" name="tld-option-selected" value="immediately"><span style="margin-right: 10px;">Immediately</span>
+				<input type="radio" name="tld-option-selected" value="schedule" checked><span>Schedule</span>
 			</div>
 
 			<?php //switch magic happens below ?>
@@ -79,7 +123,7 @@ function tld_metabox_fields(){
 
 function tld_post_saved( $post_id ) {
 
-	if(isset($_COOKIE['tld-cookie'])) {
+	if( isset( $_COOKIE['tld-cookie'] ) ) {
 
 		if ( wp_is_post_revision( $post_id ) || wp_is_post_autosave( $post_id ) )
 		return;
@@ -87,8 +131,17 @@ function tld_post_saved( $post_id ) {
 		global $wpdb;
 		$tld_tbl_prefix = $wpdb->prefix;
 		$tld_the_table = $tld_tbl_prefix . 'woocommerce_downloadable_product_permissions';
+		$query_result = $wpdb->get_results(
+		"SELECT *
+		FROM $tld_the_table
+		WHERE ( product_id=$post_id )
+		AND (access_expires > NOW() OR access_expires IS NULL )
+		"
+	);
 
-		$query_result = $wpdb->get_results("SELECT * FROM $tld_the_table WHERE product_id=$post_id AND access_expires > NOW()");
+	$tld_option_selected = $_POST['tld-option-selected'];
+
+	if ( $tld_option_selected == 'immediately' ){
 
 		foreach ( $query_result as $tld_email_address ){
 
@@ -96,17 +149,42 @@ function tld_post_saved( $post_id ) {
 			$post_title = get_the_title( $post_id );
 			$post_url = esc_url( get_permalink( $post_id ) );
 			$subject = 'Your download has been updated!';
-			$message = "There is an update for your product:\n\n";
+			$message = "There is a new update to your awesome product:\n\n";
 			$tld_home_url = esc_url( home_url() );
-			$message .= $post_title . "\n\nDownload it from your account -> " . $tld_home_url . "/my-account";
+			$message .= $post_title . "\n\nLog in to get it from your account now -> " . $tld_home_url;
 			wp_mail( $tld_the_email, $subject, $message );
-			usleep(500000); //sleep for 1/2 a second
-			//			echo '<script>console.log("'.$tld_email_address->user_email.'")</script>';
+			//usleep(250000); //sleep for 1/4 a second
+			//echo '<script>console.log("'.$tld_email_address->user_email.'")</script>';
 		}
 
+	}else{
+
+		foreach ( $query_result as $tld_email_address ){
+
+			$tld_the_email = $tld_email_address->user_email;
+			$post_title = get_the_title( $post_id );
+			$post_url = esc_url( get_permalink( $post_id ) );
+			$subject = 'Your download has been updated!';
+			$message = "There is a new update to your awesome product:\n\n";
+			$tld_home_url = esc_url( home_url() );
+			$message .= $post_title . "\n\nLog in to get it from your account now -> " . $tld_home_url;
+
+			$tld_the_schedule_table = $tld_tbl_prefix . 'woocommerce_downloadable_product_emails_tld';
+			$wpdb->insert(
+			$tld_the_schedule_table,
+			array(
+				'id' => '',
+				'user_email' => $tld_the_email,
+				'product_id' => $post_id,
+			)
+		);
+
 	}
-	//delete our cookie since we're done with it
-	setcookie("tld-cookie", "tld-switch-cookie", time() - 3600);
+
+}
+}
+//delete our cookie since we're done with it
+setcookie("tld-cookie", "tld-switch-cookie", time() - 3600);
 }
 
 add_action('save_post', 'tld_post_saved');
