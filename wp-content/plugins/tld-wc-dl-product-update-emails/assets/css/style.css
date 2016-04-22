@@ -30,6 +30,10 @@
 }
 
 #meta-switch-label{
-font-size:12px;
-margin-bottom: 15px;
+  font-size:12px;
+  margin-bottom: 15px;
 }
+
+.tld-wcdpue-center-text{ text-align: center; }
+
+.tld-wcdpue-top-margin{ margin-top: 10px; }
