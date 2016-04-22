@@ -7,14 +7,14 @@ A simple plugin used to send emails to customers who bought a downloadable produ
 
 I Noticed that there's not a feature for this, or maybe I didn't look hard enough. But either way this is a plugin to add some basic functionality to your website.
 
-<img src="http://s30.postimg.org/5c1uzwklt/product_emails.png" />
+<img src="http://s31.postimg.org/kejzzm08r/product_emails_v3_1_0.png" />
 
 # Plans
 
 <ul>
 <em>Plugin options page for settings such as:</em><br />
 
-<li>CUSTOM SMTP (currently possible by using POSTMAN SMTP plugin or any other custom SMTP plugin</li>
+<li>CUSTOM SMTP (currently possible by using POSTMAN SMTP plugin or any other custom SMTP plugin, might not bother)</li>
 <li>CUSTOM HTML EMAILS</li>
 /**************/<br>
 </ul>
