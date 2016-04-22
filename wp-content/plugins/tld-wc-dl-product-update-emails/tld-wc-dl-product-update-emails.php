@@ -3,7 +3,7 @@
 Plugin Name: TLD WC Downloadable Product Update Emails
 Plugin URI: http://soaringleads.com
 Description: Inform customers when there is an update to their downloadable product.
-Version: 3.1.0-alpha
+Version: 3.1.1-alpha
 Author: Uriahs Victor
 Author URI: http://soaringleads.com
 License: GPL2
@@ -87,6 +87,10 @@ function tld_metabox_fields(){
 		<div>
 
 			<div style="text-align: center;">
+				<p>Buyers with download access: <?php tld_get_product_owners() ?></p>
+			</div>
+
+			<div style="text-align: center;">
 				<label for="tld-option-selected" id="meta-switch-label">Send product update email?</label>
 			</div>
 			<!-- /.tld-meta-head -->
@@ -97,11 +101,7 @@ function tld_metabox_fields(){
 				<div id='circle'></div>
 			</div>
 
-			<div style="text-align: center;">
-				<p>User count: <?php tld_get_product_owners() ?></p>
-			</div>
-
-			<div style="text-align: center;">
+			<div style="text-align: center; margin-top: 10px;">
 				<input type="radio" name="tld-option-selected" value="immediately"><span style="margin-right: 10px;">Immediately</span>
 				<input type="radio" name="tld-option-selected" value="schedule" checked><span>Schedule</span>
 			</div>
