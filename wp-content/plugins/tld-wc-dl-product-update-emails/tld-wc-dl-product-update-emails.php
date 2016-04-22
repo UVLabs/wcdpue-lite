@@ -3,7 +3,7 @@
 Plugin Name: TLD WC Downloadable Product Update Emails
 Plugin URI: http://soaringleads.com
 Description: Inform customers when there is an update to their downloadable product.
-Version: 3.1.1-alpha
+Version: 1.0.0-beta
 Author: Uriahs Victor
 Author URI: http://soaringleads.com
 License: GPL2
@@ -29,7 +29,7 @@ function tld_load_assets() {
 
 	wp_enqueue_script( 'tld_uilang', plugin_dir_url( __FILE__ ) . 'assets/js/uilang.js' );
 	wp_enqueue_script( 'tld_scripts', plugin_dir_url( __FILE__ ) . 'assets/js/tld-scripts.js?v1.0.0' );
-	wp_enqueue_style( 'tld_styles', plugin_dir_url( __FILE__ ) . 'assets/css/style.css?v1.0.0' );
+	wp_enqueue_style( 'tld_styles', plugin_dir_url( __FILE__ ) . 'assets/css/style.css?v1.0.1' );
 
 }
 add_action( 'admin_enqueue_scripts', 'tld_load_assets' );
@@ -78,19 +78,17 @@ function tld_get_product_owners(){
 }
 
 function tld_metabox_fields(){
-	//way to little options to create a stylesheet imo
 	//ADD NOUNCE FIELD
 	?>
 
-	<div>
 
-		<div>
+		<div class="tld-wcdpue-center-text">
 
-			<div style="text-align: center;">
+			<div>
 				<p>Buyers with download access: <?php tld_get_product_owners() ?></p>
 			</div>
 
-			<div style="text-align: center;">
+			<div>
 				<label for="tld-option-selected" id="meta-switch-label">Send product update email?</label>
 			</div>
 			<!-- /.tld-meta-head -->
@@ -101,7 +99,7 @@ function tld_metabox_fields(){
 				<div id='circle'></div>
 			</div>
 
-			<div style="text-align: center; margin-top: 10px;">
+			<div class="tld-wcdpue-top-margin">
 				<input type="radio" name="tld-option-selected" value="immediately"><span style="margin-right: 10px;">Immediately</span>
 				<input type="radio" name="tld-option-selected" value="schedule" checked><span>Schedule</span>
 			</div>
@@ -115,8 +113,7 @@ function tld_metabox_fields(){
 			<?php // end magic ?>
 
 		</div>
-		<!-- /.meta-row -->
-	</div>
+
 	<?php
 }
 
