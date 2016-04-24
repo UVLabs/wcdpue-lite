@@ -27,11 +27,11 @@ jQuery( function($){
 
   $(window).load(function() {
 
-    var tldOphanCookie = getCookie("tld-cookie");
+    var tldOphanCookie = getCookie("tld-wcdpue-cookie");
     //delete cookie if it already existed, in case user sets switch to active but refreshes page
     if (tldOphanCookie !== null) {
 
-      document.cookie = "tld-cookie = tld-switch-cookie; expires=Thu, 01 Jan 1970 00:00:00 UTC"
+      document.cookie = "tld-wcdpue-cookie = tld-switch-cookie; expires=Thu, 01 Jan 1970 00:00:00 UTC"
 
     }
 
@@ -42,16 +42,15 @@ jQuery( function($){
 
 function tld_cookie_business() {
 
-  var tldCookie = getCookie("tld-cookie");
+  var tldCookie = getCookie("tld-wcdpue-cookie");
   if (tldCookie == null) {
 
-    document.cookie = "tld-cookie = tld-switch-cookie"
+    document.cookie = "tld-wcdpue-cookie = tld-switch-cookie"
     //console.log('cookie created')
 
   } else {
 
-    //console.log('cookie already exists')
-    document.cookie = "tld-cookie = tld-switch-cookie; expires=Thu, 01 Jan 1970 00:00:00 UTC"
-    //console.log('cookie deleted')
+    document.cookie = "tld-wcdpue-cookie = tld-switch-cookie; expires=Thu, 01 Jan 1970 00:00:00 UTC"
+
   }
 }
