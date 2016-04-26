@@ -3,7 +3,7 @@
 Plugin Name: TLD WC Downloadable Product Update Emails
 Plugin URI: http://soaringleads.com
 Description: Inform customers when there is an update to their downloadable product.
-Version: 1.1.0-beta
+Version: 1.1.1-beta
 Author: Uriahs Victor
 Author URI: http://soaringleads.com
 License: GPL2
@@ -11,21 +11,19 @@ License: GPL2
 
 defined( 'ABSPATH' ) or die( 'But why!?' );
 
-//create db table
+//table setup
 require_once dirname( __FILE__ ) . '/includes/tld-table-setup.php';
-register_activation_hook( __FILE__, 'tld_wcdlprodmails_setup_table' );
 
-//setup schedule
+//schedule setup
 include dirname( __FILE__ ) . '/includes/tld-schedule-mail.php';
+
+//options page setup
 include dirname( __FILE__ ) . '/includes/admin/tld-settings-page.php';
+
+//activation/deactivation tasks
+register_activation_hook( __FILE__, 'tld_wcdpue_setup_table' );
 register_activation_hook( __FILE__, 'tld_wcdpue_activate_schedule' );
 register_deactivation_hook(__FILE__, 'tld_wcdpue_deactivate_schedule');
-
-function tld_wcdpue_deactivate_schedule() {
-
-	wp_clear_scheduled_hook('tld_wcdpue_email_burst');
-
-}
 
 //register assets
 function tld_wcdpue_load_assets() {
@@ -36,6 +34,12 @@ function tld_wcdpue_load_assets() {
 
 }
 add_action( 'admin_enqueue_scripts', 'tld_wcdpue_load_assets' );
+
+function tld_wcdpue_deactivate_schedule() {
+
+	wp_clear_scheduled_hook('tld_wcdpue_email_burst');
+
+}
 
 //Quick cron job for scheduling tests
 
@@ -49,7 +53,6 @@ function tld_wcdpue_cron_quarter_hour($schedules){
 	return $schedules;
 }
 add_filter( 'cron_schedules', 'tld_wcdpue_cron_quarter_hour' );
-
 
 function tld_wcdpue_metabox(){
 
@@ -173,14 +176,11 @@ function tld_wcdpue_post_saved( $post_id ) {
 
 		foreach ( $query_result as $tld_email_address ){
 
-			$tld_the_email = $tld_email_address->user_email;
 			$post_title = get_the_title( $post_id );
 			$post_url = esc_url( get_permalink( $post_id ) );
-			//	$subject = 'Your Downloadable Product has been updated!';
-			//$message = "There is a new update for your product:\n\n";
 			$tld_home_url = esc_url( home_url() );
+			$tld_the_email = $tld_email_address->user_email;
 			$message .= $post_title . "\n\nLog in to download it from your account now -> " . $tld_home_url;
-
 			$tld_the_schedule_table = $tld_tbl_prefix . 'woocommerce_downloadable_product_emails_tld';
 			$wpdb->insert(
 			$tld_the_schedule_table,
@@ -194,9 +194,11 @@ function tld_wcdpue_post_saved( $post_id ) {
 	}
 
 }
+
 }
 //delete our cookie since we're done with it
 setcookie("tld-wcdpue-cookie", "tld-switch-cookie", time() - 3600);
+
 }
 
 add_action('save_post', 'tld_wcdpue_post_saved');

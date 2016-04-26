@@ -2,8 +2,6 @@
 // create custom plugin settings menu
 add_action('admin_menu', 'tld_wcdpue_add_admin_menu');
 
-/*
-*/
 function tld_wcdpue_add_admin_menu() {
 
   //create new settings menu item
@@ -13,16 +11,8 @@ function tld_wcdpue_add_admin_menu() {
   add_action( 'admin_init', 'tld_wcdpue_settings' );
 }
 
-
-function tld_wcdpue_settings() {
-  //register our settings
-  register_setting( 'tld_wcdpue-settings-group', 'tld-wcdpue-email-subject' );
-  register_setting( 'tld_wcdpue-settings-group', 'tld-wcdpue-email-body' );
-  register_setting( 'tld_wcdpue-settings-group', 'tld-wcdpue-email-bursts-count' );
-
-}
-
 function tld_wcdpue_settings_page() {
+  //page mark up
   ?>
 
   <div class="wrap">
@@ -64,32 +54,70 @@ function tld_wcdpue_settings_page() {
       </tr>
 
       <tr valign="top">
-        <th scope="row">Schedule:</th>
+        <th scope="row">Select Schedule:</th>
+        <td>
+
+          <select name="tld-wcdpue-schedule-setting-value">
+            <?php
+
+            $active_cron_schedules = wp_get_schedules();
+            foreach ( $active_cron_schedules as $key => $value ) {
+
+              echo '<option value="' . $key . '">' . $value['display'] . '</option>';
+
+            }
+
+            ?>
+          </select>
+        </td>
+
+      </tr>
+
+      <tr valign="top">
+        <th>Current Schedule:</th>
         <td>
           <?php
-          //not working as yet
-          $active_cron_schedules = wp_get_schedules();
-          print_r(Array_values($active_cron_schedules));
-          $value = 'display';
-          echo $active_cron_schedules['0']['display'];
-          foreach ($active_cron_schedules as $key => $value) {
-            echo $key;
+
+          foreach ( $active_cron_schedules as $key => $value ) {
+
+            $tld_wcdpue_current_schedule = esc_attr( get_option( 'tld-wcdpue-schedule-setting-value' ) );
+            if( $key == $tld_wcdpue_current_schedule ){
+
+              echo  $value['display'];
+              
+            }
           }
 
           ?>
-          <select>
-
-            <option value="volvo">Volvo</option>
-
-          </select>
         </td>
       </tr>
-
-
     </table>
 
     <?php submit_button(); ?>
 
   </form>
 </div>
-<?php } ?>
+
+
+<?php }
+
+function tld_wcdpue_settings() {
+
+  //register our settings
+  register_setting( 'tld_wcdpue-settings-group', 'tld-wcdpue-email-subject' );
+  register_setting( 'tld_wcdpue-settings-group', 'tld-wcdpue-email-body' );
+  register_setting( 'tld_wcdpue-settings-group', 'tld-wcdpue-email-bursts-count' );
+  register_setting( 'tld_wcdpue-settings-group', 'tld-wcdpue-schedule-setting-value' );
+
+}
+
+function tld_wcdpue_update_schedule() {
+
+  $tld_wcdpue_set_cron_interval = get_option( 'tld-wcdpue-schedule-setting-value' ); //get interval set by user
+  wp_clear_scheduled_hook('tld_wcdpue_email_burst'); //remove previous scheduled time
+  wp_schedule_event( time(), $tld_wcdpue_set_cron_interval, 'tld_wcdpue_email_burst' ); //add new scheduled time
+
+}
+add_action( 'update_option_tld-wcdpue-schedule-setting-value', 'tld_wcdpue_update_schedule');
+
+?>

@@ -2,7 +2,7 @@
 global $tld_tbl_ver;
 $tld_tbl_ver = '1.1.2';
 
-function tld_wcdlprodmails_setup_table(){
+function tld_wcdpue_setup_table(){
 
   global $wpdb;
   global $tld_tbl_ver;

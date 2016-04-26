@@ -1,11 +1,10 @@
 <?php
+
 function tld_wcdpue_activate_schedule(){
 
-  //  wp_schedule_event( time(), 'hourly', 'tld_wcdpue_email_burst' );
-  wp_schedule_event( time(), 'tld_quick_cron', 'tld_wcdpue_email_burst' );
+wp_schedule_event( time(), 'daily', 'tld_wcdpue_email_burst' );
 
 }
-
 add_action( 'tld_wcdpue_email_burst', 'tld_wcdpue_send_schedule_mail' );
 
 function tld_wcdpue_send_schedule_mail(){
@@ -32,7 +31,6 @@ function tld_wcdpue_send_schedule_mail(){
   $tld_tbl_prefix = $wpdb->prefix;
   $tld_the_table = $tld_tbl_prefix . 'woocommerce_downloadable_product_emails_tld';
   $query_result = $wpdb->get_results( "SELECT * FROM $tld_the_table ORDER BY id ASC LIMIT $tld_wcdpue_email_bursts_count" );
-
 
   foreach ( $query_result as $result ){
 

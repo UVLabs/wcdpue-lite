@@ -1,0 +1,3 @@
+-When user updates schedule it runs at the current time, so this would fire all previously queued emails at that time.
+
+--Might need to change this behavior so it sends fires function at new scheule time.
