@@ -2,7 +2,16 @@
 
 function tld_wcdpue_activate_schedule(){
 
-wp_schedule_event( time(), 'daily', 'tld_wcdpue_email_burst' );
+  $tld_wcdpue_current_schedule = get_option('tld-wcdpue-schedule-setting-value');
+  if ( !empty( $tld_wcdpue_current_schedule ) ){
+
+    wp_schedule_event( time(), $tld_wcdpue_current_schedule, 'tld_wcdpue_email_burst' );
+
+  }else{
+
+    wp_schedule_event( time(), 'daily', 'tld_wcdpue_email_burst' );
+
+  }
 
 }
 add_action( 'tld_wcdpue_email_burst', 'tld_wcdpue_send_schedule_mail' );

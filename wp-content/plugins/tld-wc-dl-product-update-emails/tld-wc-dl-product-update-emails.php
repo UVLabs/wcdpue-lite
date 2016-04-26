@@ -3,7 +3,7 @@
 Plugin Name: TLD WC Downloadable Product Update Emails
 Plugin URI: http://soaringleads.com
 Description: Inform customers when there is an update to their downloadable product.
-Version: 1.2.1-beta
+Version: 1.3.0-beta
 Author: Uriahs Victor
 Author URI: http://soaringleads.com
 License: GPL2
@@ -23,20 +23,39 @@ include dirname( __FILE__ ) . '/includes/admin/tld-settings-page.php';
 //activation/deactivation tasks
 register_activation_hook( __FILE__, 'tld_wcdpue_setup_table' );
 register_activation_hook( __FILE__, 'tld_wcdpue_activate_schedule' );
-register_deactivation_hook(__FILE__, 'tld_wcdpue_deactivate_schedule');
+register_deactivation_hook( __FILE__, 'tld_wcdpue_deactivate_schedule');
+register_uninstall_hook( __FILE__, 'tld_wcdpue_byebye' );
 
+//uninstall
+
+function tld_wcdpue_byebye(){
+	echo '<script>alert("Uninstalled")</script>';
+}
+
+function tld_check_permission(){
+
+	if ( ! current_user_can( 'activate_plugins' ) ) {
+		return;
+	}
+
+	$plugin = isset( $_REQUEST['plugin'] ) ? $_REQUEST['plugin'] : '';
+	//echo '<script>alert("'.$plugin.'")</script>';
+	check_admin_referer( "deactivate-plugin_{$plugin}" );
+
+}
 //register assets
 function tld_wcdpue_load_assets() {
 
 	wp_enqueue_script( 'tld_wcdpue_uilang', plugin_dir_url( __FILE__ ) . 'assets/js/uilang.js' );
 	wp_enqueue_script( 'tld_wcdpue_scripts', plugin_dir_url( __FILE__ ) . 'assets/js/tld-scripts.js?v1.0.1' );
-	wp_enqueue_style( 'tld_wcdpue_styles', plugin_dir_url( __FILE__ ) . 'assets/css/style.css?v1.0.1' );
+	wp_enqueue_style( 'tld_wcdpue_styles', plugin_dir_url( __FILE__ ) . 'assets/css/style.css?v1.1.10' );
 
 }
 add_action( 'admin_enqueue_scripts', 'tld_wcdpue_load_assets' );
 
 function tld_wcdpue_deactivate_schedule() {
 
+	tld_check_permission();
 	wp_clear_scheduled_hook('tld_wcdpue_email_burst');
 
 }

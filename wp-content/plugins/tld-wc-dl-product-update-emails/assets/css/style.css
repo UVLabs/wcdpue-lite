@@ -1,3 +1,5 @@
+/*=== Metabox ===*/
+
 #tld-switch, #circle {
   height: 50px;
   transition: .4s;
@@ -37,3 +39,54 @@
 .tld-wcdpue-center-text{ text-align: center; }
 
 .tld-wcdpue-top-margin{ margin-top: 10px; }
+
+/*=== Donation ===*/
+
+#tld-donation-wrap{
+  background: #fff;
+  position: fixed;
+  width: 24%;
+  top: 40%;
+  right: 10px;
+  text-align: center;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+#tld-donation-header{
+  background: #000;
+  color: #fff;
+  padding: 5px 0;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+#tld-donation-body{
+  padding: 10px;
+}
+
+/*=== Media Queries ===*/
+
+@media screen and (max-width:1024px) {
+
+  #tld-donation-wrap{
+    position: relative;
+    width: 100%;
+    right: 0;
+  }
+
+}
+
+@media screen
+and (min-device-width: 768px)
+and (max-device-width: 1024px)
+and (orientation: landscape)
+and (-webkit-min-device-pixel-ratio: 1) {
+
+  #tld-donation-wrap{
+    position: relative;
+    width: 100%;
+    right: 0;
+  }
+
+}

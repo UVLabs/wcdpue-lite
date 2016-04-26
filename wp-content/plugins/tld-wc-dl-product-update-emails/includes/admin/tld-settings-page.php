@@ -5,106 +5,141 @@ add_action('admin_menu', 'tld_wcdpue_add_admin_menu');
 function tld_wcdpue_add_admin_menu() {
 
   //create new settings menu item
-  add_options_page('TLD Product Update Emails', 'TLD Product Update Emails', 'administrator', 'tld_product_update_emails', 'tld_wcdpue_settings_page' );
+  add_options_page('Product Update Emails', 'Product Update Emails', 'administrator', 'tld_product_update_emails', 'tld_wcdpue_settings_page' );
 
   //call register settings function
   add_action( 'admin_init', 'tld_wcdpue_settings' );
 }
 
 function tld_wcdpue_settings_page() {
-  //page html 
+  //page html
   ?>
 
   <div class="wrap">
-    <h2>TLD WC Downloadable Product Update Emails</h2>
+    <h2>Plugin Options</h2>
+    <div class="left">
+      <form method="post" action="options.php">
 
-    <form method="post" action="options.php">
+        <?php settings_fields( 'tld_wcdpue-settings-group' ); ?>
+        <?php do_settings_sections( 'tld_wcdpue-settings-group' ); ?>
 
-      <?php settings_fields( 'tld_wcdpue-settings-group' ); ?>
-      <?php do_settings_sections( 'tld_wcdpue-settings-group' ); ?>
+        <table class="form-table">
 
-      <table class="form-table">
+          <tr valign="top">
+            <td><h3>Email options</h3></td>
+          </tr>
 
-        <tr valign="top">
-          <td><h3>Email Options</h3></td>
-        </tr>
+          <tr valign="top">
+            <th scope="row">Email subject</th>
+            <td><input type="text" name="tld-wcdpue-email-subject" value="<?php echo esc_attr( get_option('tld-wcdpue-email-subject') ); ?>" placeholder="Your Downloadable Product has been updated!" size="70"/></td>
+          </tr>
 
-        <tr valign="top">
-          <th scope="row">Email Subject</th>
-          <td><input type="text" name="tld-wcdpue-email-subject" value="<?php echo esc_attr( get_option('tld-wcdpue-email-subject') ); ?>" placeholder="Your Downloadable Product has been updated!" size="70"/></td>
-        </tr>
+          <tr valign="top">
+            <th scope="row">Message</th>
+            <td>
+              <textarea name="tld-wcdpue-email-body" placeholder="Enter optional text for the email body." rows="15" cols="70"/><?php echo esc_attr( get_option('tld-wcdpue-email-body') ); ?>     </textarea>
+            </td>
+          </tr>
 
-        <tr valign="top">
-          <th scope="row">Message</th>
-          <td>
-            <textarea name="tld-wcdpue-email-body" placeholder="Enter optional text for the email body." rows="15" cols="70"/><?php echo esc_attr( get_option('tld-wcdpue-email-body') ); ?>     </textarea>
-          </td>
-        </tr>
+          <tr valign="top">
+            <td><h3>Email schedule options</h3></td>
+          </tr>
 
-        <tr valign="top">
-          <td><h3>Email Schedule Options</h3></td>
-        </tr>
+          <tr valign="top">
+            <th scope="row">Send e-mails in bursts of <small>(recommend you keep this value below 10)</small>:</th>
+            <td>
+              <input type="number" name="tld-wcdpue-email-bursts-count" value="<?php echo esc_attr( get_option('tld-wcdpue-email-bursts-count') ); ?>" min="1" size="4"/>
+            </td>
+          </tr>
 
-        <tr valign="top">
-          <th scope="row">Send e-mails in bursts of <small>(recommend you keep this value below 10)</small>:</th>
-          <td>
-            <input type="number" name="tld-wcdpue-email-bursts-count" value="<?php echo esc_attr( get_option('tld-wcdpue-email-bursts-count') ); ?>" min="1" size="4"/>
-          </td>
-        </tr>
-
-        <tr valign="top">
-          <th scope="row">Select Schedule:</th>
-          <td>
-
-            <select name="tld-wcdpue-schedule-setting-value">
+          <tr valign="top">
+            <th>Current schedule:</th>
+            <td>
               <?php
-
               $active_cron_schedules = wp_get_schedules();
-              foreach ( $active_cron_schedules as $key => $value ) {
+              $tld_wcdpue_current_schedule = esc_attr( get_option( 'tld-wcdpue-schedule-setting-value' ) );
 
-                echo '<option value="' . $key . '">' . $value['display'] . '</option>';
+              if ( !empty( $tld_wcdpue_current_schedule ) ){
 
-              }
+                foreach ( $active_cron_schedules as $key => $value ) {
 
-              ?>
-            </select>
-          </td>
+                  //$tld_wcdpue_current_schedule = esc_attr( get_option( 'tld-wcdpue-schedule-setting-value' ) );
+                  if( $key == $tld_wcdpue_current_schedule ){
 
-        </tr>
+                    echo  $value['display'];
 
-        <tr valign="top">
-          <th>Current Schedule:</th>
-          <td>
-            <?php
-
-            $tld_wcdpue_current_schedule = esc_attr( get_option( 'tld-wcdpue-schedule-setting-value' ) );
-
-            if ( !empty( $tld_wcdpue_current_schedule ) ){
-
-              foreach ( $active_cron_schedules as $key => $value ) {
-
-                //$tld_wcdpue_current_schedule = esc_attr( get_option( 'tld-wcdpue-schedule-setting-value' ) );
-                if( $key == $tld_wcdpue_current_schedule ){
-
-                  echo  $value['display'];
+                  }
 
                 }
 
+              }else{
+
+                echo "Once Daily";
+
               }
+              ?>
+            </td>
+          </tr>
 
-            }else{
+          <tr valign="top">
+            <th scope="row">Select new schedule:</th>
+            <td>
+              <select name="tld-wcdpue-schedule-setting-value">
+                <?php
 
-              echo "Once Daily";
+                foreach ( $active_cron_schedules as $key => $value ) {
 
+                  echo '<option value="' . $key . '">' . $value['display'] . '</option>';
+
+                }
+
+                ?>
+              </select>
+            </td>
+          </tr>
+
+          <tr valign="top">
+            <th>Delete all plugin settings on uninstall?</th>
+            <?php
+            $checked = get_option( 'tld-wcdpue-delete-db-settings' );
+            if ( !empty( $checked ) ){
+              $checked = "checked";
             }
             ?>
-          </td>
-        </tr>
-      </table>
+            <td><input type="checkbox" name="tld-wcdpue-delete-db-settings" <?php echo $checked ?>></td>
+          </tr>
+        </table>
 
-      <?php submit_button(); ?>
+        <?php submit_button(); ?>
 
-    </form>
+      </form>
+    </div>
+
+    <div id="tld-donation-wrap">
+
+      <div id="tld-donation-container">
+        <h1 id="tld-donation-header">Did my plugin help you?</h1>
+        <div id="tld-donation-body">
+
+          <p>If this plugin genuinely helped you with your store then maybe you would like to lend me a hand?</p>
+          <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+            <input type="hidden" name="cmd" value="_donations">
+            <input type="hidden" name="business" value="donation@tutbakery.com">
+            <input type="hidden" name="lc" value="LC">
+            <input type="hidden" name="item_name" value="Support TheLoneDeveloper with your kind donation.">
+            <input type="hidden" name="item_number" value="plugin">
+            <input type="hidden" name="no_note" value="0">
+            <input type="hidden" name="currency_code" value="USD">
+            <input type="hidden" name="bn" value="PP-DonationsBF:btn_donateCC_LG.gif:NonHostedGuest">
+            <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+            <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+          </form>
+
+        </div>
+
+      </div>
+
+    </div>
   </div>
 
 
@@ -117,6 +152,7 @@ function tld_wcdpue_settings_page() {
     register_setting( 'tld_wcdpue-settings-group', 'tld-wcdpue-email-body' );
     register_setting( 'tld_wcdpue-settings-group', 'tld-wcdpue-email-bursts-count' );
     register_setting( 'tld_wcdpue-settings-group', 'tld-wcdpue-schedule-setting-value' );
+    register_setting( 'tld_wcdpue-settings-group', 'tld-wcdpue-delete-db-settings' );
 
   }
 
