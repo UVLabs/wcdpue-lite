@@ -3,7 +3,7 @@
 Plugin Name: TLD WC Downloadable Product Update Emails
 Plugin URI: http://soaringleads.com
 Description: Inform customers when there is an update to their downloadable product.
-Version: 1.3.0-beta
+Version: 1.3.1-beta
 Author: Uriahs Victor
 Author URI: http://soaringleads.com
 License: GPL2
@@ -24,13 +24,6 @@ include dirname( __FILE__ ) . '/includes/admin/tld-settings-page.php';
 register_activation_hook( __FILE__, 'tld_wcdpue_setup_table' );
 register_activation_hook( __FILE__, 'tld_wcdpue_activate_schedule' );
 register_deactivation_hook( __FILE__, 'tld_wcdpue_deactivate_schedule');
-register_uninstall_hook( __FILE__, 'tld_wcdpue_byebye' );
-
-//uninstall
-
-function tld_wcdpue_byebye(){
-	echo '<script>alert("Uninstalled")</script>';
-}
 
 function tld_check_permission(){
 
