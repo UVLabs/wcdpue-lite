@@ -14,6 +14,10 @@ if ( !empty( '$tld_wcdpue_byebye' ) ){
   delete_option('tld-wcdpue-email-body');
   delete_option('tld-wcdpue-delete-db-settings');
 
+  global $wpdb;
+  $tld_tbl_name = $wpdb->prefix."woocommerce_downloadable_product_emails_tld";
+  $wpdb->query("DROP TABLE IF EXISTS $tld_tbl_name");
+
 }
 
 ?>
