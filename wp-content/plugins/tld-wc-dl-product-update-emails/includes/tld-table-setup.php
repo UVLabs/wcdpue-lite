@@ -22,7 +22,7 @@ function tld_wcdpue_setup_table(){
 
   require_once ( ABSPATH . 'wp-admin/includes/upgrade.php');
   dbDelta ( $sql );
-  add_option ('tld_table_version', $tld_tbl_ver);
+  add_option ('tld_table_version', $tld_tbl_ver); //check this out
 
   //below doesnt update database for some reason :3
 

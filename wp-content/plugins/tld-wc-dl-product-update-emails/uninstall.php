@@ -6,7 +6,7 @@ if ( !defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 
 $tld_wcdpue_byebye = get_option('tld-wcdpue-delete-db-settings');
 
-if ( !empty( '$tld_wcdpue_byebye' ) ){
+if ( $tld_wcdpue_byebye == 'on' ){
 
   delete_option('tld-wcdpue-schedule-setting-value');
   delete_option('tld-wcdpue-email-subject');

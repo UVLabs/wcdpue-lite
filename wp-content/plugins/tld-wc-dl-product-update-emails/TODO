@@ -2,10 +2,12 @@
 
 --Might need to change this behavior so it sends fires function at new scheule time.
 ---Made a fix, test this out
-----Fixed.
+----Fixed (as of v.1.3.3).
 
 -Give user option to uninstall tables when plugin is deleted.
---started, test this out
+--Started, test this out.
+---plugin deletes options and table even though user didn't select the option.
+----Fixed (as of v.1.3.4).
 
 -Message box for email template shows blank space by default on first install.
 
