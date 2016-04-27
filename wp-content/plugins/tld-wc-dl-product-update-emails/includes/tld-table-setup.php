@@ -5,9 +5,9 @@
 function tld_wcdpue_setup_table(){
 
   if ( ! current_user_can( 'activate_plugins' ) ) {
-		return;
-	}
-  
+    return;
+  }
+
   global $wpdb;
   global $tld_tbl_ver;
   $tld_tbl_name = $wpdb->prefix . 'woocommerce_downloadable_product_emails_tld';
@@ -15,8 +15,8 @@ function tld_wcdpue_setup_table(){
 
   $sql = "CREATE TABLE $tld_tbl_name(
     id bigint(20) NOT NULL AUTO_INCREMENT,
+    product_id bigint(20),
     user_email varchar(200) DEFAULT '',
-    product_id varchar(100) DEFAULT 'Downloadable Product',
     UNIQUE KEY id  (id)
   ) $charset_collate;";
 

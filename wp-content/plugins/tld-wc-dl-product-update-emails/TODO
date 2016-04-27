@@ -1,12 +1,16 @@
 -When user updates schedule it runs at the current time, so this would fire all previously queued emails at that time.
 
 --Might need to change this behavior so it sends fires function at new scheule time.
+---Made a fix, test this out
+----Fixed.
 
--Give user to uninstall tables when plugin is deleted.
+-Give user option to uninstall tables when plugin is deleted.
+--started, test this out
 
 -Message box for email template shows blank space by default on first install.
 
 --This maybe due to the get option cell being empty, so check if option has a value before spitting it out into text area.
+---Made the change. test this out
 
 -Enhance security on activation, deactivation and uninstall hooks: https://premium.wpmudev.org/blog/activate-deactivate-uninstall-hooks/
 

@@ -2,10 +2,23 @@
 
 function tld_wcdpue_activate_schedule(){
 
-  $tld_wcdpue_current_schedule = get_option('tld-wcdpue-schedule-setting-value');
-  if ( !empty( $tld_wcdpue_current_schedule ) ){
+  $tld_wcdpue_cur_recurrence = get_option('tld-wcdpue-schedule-setting-value');
 
-    wp_schedule_event( time(), $tld_wcdpue_current_schedule, 'tld_wcdpue_email_burst' );
+  if ( !empty( $tld_wcdpue_cur_recurrence ) ){
+
+    $active_cron_schedules = wp_get_schedules();
+
+    foreach ( $active_cron_schedules as $key => $value ) {
+
+      if ( $key == $tld_wcdpue_cur_recurrence ){
+
+        $tld_wcdpue_wait_time = $value['interval'];
+
+      }
+
+    }
+    
+    wp_schedule_event( time() + $tld_wcdpue_wait_time, $tld_wcdpue_cur_recurrence, 'tld_wcdpue_email_burst' );
 
   }else{
 
