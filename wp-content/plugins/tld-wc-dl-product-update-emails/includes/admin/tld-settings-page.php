@@ -131,7 +131,7 @@ function tld_wcdpue_settings_page() {
         <h1 id="tld-donation-header">Did my plugin help?</h1>
         <div id="tld-donation-body">
 
-          <p>If this plugin genuinely helped you with your store then maybe you would like to donate?</p>
+          <p>If this plugin genuinely helped you with managing your store then maybe you might like to donate?</p>
           <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
             <input type="hidden" name="cmd" value="_donations">
             <input type="hidden" name="business" value="donation@tutbakery.com">
