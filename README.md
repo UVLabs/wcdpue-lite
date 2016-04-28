@@ -3,13 +3,22 @@
 License: GPLv2 or later<br>
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Current Version: 1.3.5-beta
+Current Version: 1.3.6-beta
 
 A simple plugin used to send emails to customers who bought a downloadable product, letting them know that there's been an update to their download.
 
-I Noticed that there's not a feature for this, or maybe I didn't look hard enough. But either way this is a plugin to add some basic functionality to your website.
+Main UI on product screen
 
 <img src="http://s31.postimg.org/kejzzm08r/product_emails_v3_1_0.png" />
+
+Settings screen
+
+<img src="http://s32.postimg.org/uf3ssw2c5/screenshot_2.png" />
+
+Customizable email body
+
+<img src="http://s32.postimg.org/y7nb8mhud/screenshot_4.png" />
+
 
 # Plans
 
