@@ -1,5 +1,9 @@
 /*=== Metabox ===*/
 
+#tld_wcdpue_metabox h2 {
+  text-align: center;
+}
+
 #tld-switch, #circle {
   height: 50px;
   transition: .4s;

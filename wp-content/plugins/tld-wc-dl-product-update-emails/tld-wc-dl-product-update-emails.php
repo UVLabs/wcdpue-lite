@@ -1,9 +1,9 @@
 <?php
 /*
-Plugin Name: TLD WC Downloadable Product Update Emails
+Plugin Name: TLD WooCommerce Downloadable Product Update Emails
 Plugin URI: http://soaringleads.com
-Description: Inform customers when there is an update to their downloadable product.
-Version: 1.3.6-beta
+Description: Inform customers when there is an update to their downloadable product. Never let customers guess if an edition of the e-book (an example) they bought has been updated. No more need to manually email customers about downloadable product updates or creating a new product.
+Version: 1.0.0
 Author: Uriahs Victor
 Author URI: http://soaringleads.com
 License: GPL2
@@ -30,14 +30,13 @@ register_deactivation_hook( __FILE__, 'tld_wcdpue_deactivate_schedule');
 function tld_wcdpue_load_assets() {
 
 	wp_enqueue_script( 'tld_wcdpue_uilang', plugin_dir_url( __FILE__ ) . 'assets/js/uilang.js' );
-	wp_enqueue_script( 'tld_wcdpue_scripts', plugin_dir_url( __FILE__ ) . 'assets/js/tld-scripts.js?v1.0.1' );
-	wp_enqueue_style( 'tld_wcdpue_styles', plugin_dir_url( __FILE__ ) . 'assets/css/style.css?v1.1.11' );
+	wp_enqueue_script( 'tld_wcdpue_scripts', plugin_dir_url( __FILE__ ) . 'assets/js/tld-scripts.js?v1.0.0' );
+	wp_enqueue_style( 'tld_wcdpue_styles', plugin_dir_url( __FILE__ ) . 'assets/css/style.css?v1.0.0' );
 
 }
 add_action( 'admin_enqueue_scripts', 'tld_wcdpue_load_assets' );
 
 function tld_wcdpue_deactivate_schedule() {
-
 
 	if ( ! current_user_can( 'activate_plugins' ) ) {
 		return;
@@ -51,7 +50,7 @@ function tld_wcdpue_deactivate_schedule() {
 
 }
 
-//Quick cron job for scheduling tests
+//Quick cron job for user convience
 
 function tld_wcdpue_cron_quarter_hour($schedules){
 
@@ -70,7 +69,7 @@ function tld_wcdpue_metabox(){
 
 	add_meta_box(
 	'tld_wcdpue_metabox',
-	'Product Email Options',
+	'Downloadable Product Email Options',
 	'tld_metabox_fields',
 	'',
 	'side',

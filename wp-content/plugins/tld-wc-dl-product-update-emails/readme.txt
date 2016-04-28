@@ -3,7 +3,7 @@
 Contributors:      (plugin contributors)
 Plugin Name:       TLD WC Downloadable Product Update Emails
 Plugin URI:        https://github.com/UVLabs/WooCommerce-Downloadable-Product-Update-Emails
-Tags:              woocommerce, emails, downloadable, products, update, schedule, ecommerce, e-commerce, customers
+Tags:              woocommerce, emails, downloadable, products, update, schedule, ecommerce, e-commerce, customers, ebook, software, music, videos
 Author URI:        http://soaringleads.com
 Author:            Uriahs Victor (TheLoneDeveloper)
 Requires at least: 4.1
@@ -13,7 +13,7 @@ Version:           1.0.0
 
 == Description ==
 
-A simple plugin used to send emails to customers who bought a downloadable product, letting them know that there's been an update to their download. Never let customers guess if an edition of the ebook they bought has been updated. No more need to manually email customers about downloadable product updates or creating a new product.
+A simple plugin used to send emails to customers who bought a downloadable product, letting them know that there's been an update to their download. Never let customers guess if an edition of the e-book they bought has been updated. No more need to manually email customers about downloadable product updates or creating a new product.
 
 == Installation ==
 
@@ -32,7 +32,7 @@ Used for setting the amount of emails to grab and email every time the scheduled
 1. Plugin UI on product page.
 2. Plugin Settings page.
 3. Update email sent to buyers of the product.
-4. customable email body, more customization soon.
+4. Customable email body, more customization soon.
 
 == Changelog ==
 
