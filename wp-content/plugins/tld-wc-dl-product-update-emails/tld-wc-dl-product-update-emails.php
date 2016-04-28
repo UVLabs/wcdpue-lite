@@ -3,7 +3,7 @@
 Plugin Name: TLD WC Downloadable Product Update Emails
 Plugin URI: http://soaringleads.com
 Description: Inform customers when there is an update to their downloadable product.
-Version: 1.3.4-beta
+Version: 1.3.5-beta
 Author: Uriahs Victor
 Author URI: http://soaringleads.com
 License: GPL2
@@ -107,9 +107,6 @@ function tld_metabox_fields(){
 		<div>
 			<label for="tld-option-selected" id="meta-switch-label">Send product update email?</label>
 		</div>
-		<!-- /.tld-meta-head -->
-
-		<!--Script was here -->
 
 		<div id='tld-switch' onclick="tld_cookie_business()">
 			<div id='circle'></div>
@@ -179,7 +176,7 @@ function tld_wcdpue_post_saved( $post_id ) {
 			$message = $tld_wcdpue_email_body . "\n\n";
 			$message .= $post_title . ": " . $tld_prod_url . "\n\nLog in to download it from your account now -> " . $tld_home_url;
 			wp_mail( $tld_the_email, $subject, $message );
-			//echo '<script>console.log("'.$tld_email_address->user_email.'")</script>';
+
 		}
 
 	}else{

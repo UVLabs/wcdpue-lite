@@ -17,7 +17,7 @@ function tld_wcdpue_activate_schedule(){
       }
 
     }
-    
+
     wp_schedule_event( time() + $tld_wcdpue_wait_time, $tld_wcdpue_cur_recurrence, 'tld_wcdpue_email_burst' );
 
   }else{
@@ -46,7 +46,7 @@ function tld_wcdpue_send_schedule_mail(){
   }
 
   if ( empty( $tld_wcdpue_email_bursts_count ) ){
-    $tld_wcdpue_email_bursts_count = 10; //limit to 10 to help avoid blacklisting?
+    $tld_wcdpue_email_bursts_count = 5; //limit to 5
   }
 
   global $wpdb;
@@ -65,8 +65,7 @@ function tld_wcdpue_send_schedule_mail(){
     $message = $tld_wcdpue_email_body . "\n\n";
     $message .= $tld_post_title . ": " . $tld_prod_url . "\n\nLog in to download it from your account now -> " . $tld_home_url;
     wp_mail( $tld_the_email, $subject, $message );
-    //delete the current row in loop after mail sent
-    $wpdb->delete( $tld_the_table, array( 'id' => $result->id ) );
+    $wpdb->delete( $tld_the_table, array( 'id' => $result->id ) );   //delete the current row in loop after mail sent
     sleep(1); //short breath, no rush.
 
   }

@@ -1,60 +1,55 @@
 <?php
-//global $tld_tbl_ver;
-//$tld_tbl_ver = '1.1.2';
 
 function tld_wcdpue_setup_table(){
 
   if ( ! current_user_can( 'activate_plugins' ) ) {
+
     return;
+
   }
 
+  $tld_tbl_ver = '1.0.0';
+  $tld_wcdpue_cur_version = get_option('tld_table_version');
   global $wpdb;
-  global $tld_tbl_ver;
-  $tld_tbl_name = $wpdb->prefix . 'woocommerce_downloadable_product_emails_tld';
   $charset_collate = $wpdb->get_charset_collate();
 
-  $sql = "CREATE TABLE $tld_tbl_name(
-    id bigint(20) NOT NULL AUTO_INCREMENT,
-    product_id bigint(20),
-    user_email varchar(200) DEFAULT '',
-    UNIQUE KEY id  (id)
-  ) $charset_collate;";
-
-  require_once ( ABSPATH . 'wp-admin/includes/upgrade.php');
-  dbDelta ( $sql );
-  add_option ('tld_table_version', $tld_tbl_ver); //check this out
-
-  //below doesnt update database for some reason :3
-
-  $installed_ver = get_option('tld_table_version');
-
-  if ( $installed_ver != $tld_tbl_ver ){
+  if ( empty( $tld_wcdpue_cur_version ) ){
 
     $tld_tbl_name = $wpdb->prefix . 'woocommerce_downloadable_product_emails_tld';
 
     $sql = "CREATE TABLE $tld_tbl_name(
       id bigint(20) NOT NULL AUTO_INCREMENT,
-      user_email varchar(50) DEFAULT '',
-      product_id varchar(100) DEFAULT '',
+      product_id bigint(20),
+      user_email varchar(200) DEFAULT '',
       UNIQUE KEY id  (id)
-    );";
+    ) $charset_collate;";
 
     require_once ( ABSPATH . 'wp-admin/includes/upgrade.php');
     dbDelta ( $sql );
-    update_option ('tld_table_version', $tld_tbl_ver); //code reaches here
+    add_option ('tld_table_version', $tld_tbl_ver);
+
+  }else{
+
+
+    //check if current version in db is lower than new version of plugin
+    if ( version_compare( $tld_wcdpue_cur_version, $tld_tbl_ver ) < 0 ){
+
+      //dbDelta buggy, lets update this using ALTER TABLE
+
+      $tld_tbl_name = $wpdb->prefix . 'woocommerce_downloadable_product_emails_tld';
+
+
+      $wpdb->query(
+
+      ""// ALTER TABLE code, futureproofness.
+
+    );
+
+    update_option ('tld_table_version', $tld_tbl_ver);
 
   }
 
 }
 
-function tld_update_tbl_check() {
-  global $tld_tbl_ver;
-
-  //look more into what's going on below
-  /*
-  if ( get_site_option( 'tld_table_version' ) != $tld_tbl_ver ) {
-  tld_wcdpue_setup_table();
-}*/
 }
-add_action( 'plugins_loaded', 'tld_update_tbl_check' );
 ?>

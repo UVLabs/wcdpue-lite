@@ -13,6 +13,7 @@ if ( $tld_wcdpue_byebye == 'on' ){
   delete_option('tld-wcdpue-email-bursts-count');
   delete_option('tld-wcdpue-email-body');
   delete_option('tld-wcdpue-delete-db-settings');
+  delete_option('tld_table_version');
 
   global $wpdb;
   $tld_tbl_name = $wpdb->prefix."woocommerce_downloadable_product_emails_tld";

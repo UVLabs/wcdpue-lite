@@ -1,19 +1,20 @@
 -When user updates schedule it runs at the current time, so this would fire all previously queued emails at that time.
 
---Might need to change this behavior so it sends fires function at new scheule time.
+--Might need to change this behavior so it sends fires function at new schedule time.
 ---Made a fix, test this out
-----Fixed (as of v.1.3.3).
+----Fixed (as of v.1.3.3-beta).
 
 -Give user option to uninstall tables when plugin is deleted.
 --Started, test this out.
 ---plugin deletes options and table even though user didn't select the option.
-----Fixed (as of v.1.3.4).
+----Fixed (as of v.1.3.4-beta).
 
 -Message box for email template shows blank space by default on first install.
 
 --This maybe due to the get option cell being empty, so check if option has a value before spitting it out into text area.
 ---Made the change. test this out
-
--Enhance security on activation, deactivation and uninstall hooks: https://premium.wpmudev.org/blog/activate-deactivate-uninstall-hooks/
+----Fixed (as of v.1.3.3-beta).
 
 -Look more into what's happening in tld_update_tbl_check() function.
+--Stopped using this function, instead created different logic for checking if table needs to be updated at plugin activate.
+---Fixed (as of v.1.3.5-beta)
