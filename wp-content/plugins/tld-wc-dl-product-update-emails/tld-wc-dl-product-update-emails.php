@@ -3,7 +3,7 @@
 Plugin Name: TLD WooCommerce Downloadable Product Update Emails
 Plugin URI: http://soaringleads.com
 Description: Inform customers when there is an update to their downloadable product. Never let customers guess if an edition of the e-book (an example) they bought has been updated. No more need to manually email customers about downloadable product updates or creating a new product.
-Version: 1.0.0
+Version: 1.0.1
 Author: Uriahs Victor
 Author URI: http://soaringleads.com
 License: GPL2
@@ -95,9 +95,7 @@ function tld_get_product_owners(){
 }
 
 function tld_metabox_fields(){
-	//ADD NOUNCE FIELD
 	?>
-
 
 	<div class="tld-wcdpue-center-text">
 
@@ -193,9 +191,11 @@ function tld_wcdpue_post_saved( $post_id ) {
 			$wpdb->insert(
 			$tld_the_schedule_table,
 			array(
+
 				'id' => '',
-				'user_email' => $tld_the_email,
 				'product_id' => $post_id,
+				'user_email' => $tld_the_email,
+
 			)
 		);
 

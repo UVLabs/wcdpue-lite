@@ -3,13 +3,17 @@
 License: GPLv2 or later<br>
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Current Version: 1.0.0
+Current Version: 1.0.1
 
 A simple plugin used to send emails to customers who bought a downloadable product, letting them know that there's been an update to their download.
 
-Main UI on product screen
+Main UI on product screen (button turned off)
 
-<img src="http://s31.postimg.org/kejzzm08r/product_emails_v3_1_0.png" />
+<img src="http://s32.postimg.org/51qbfxkd1/screenshot_1.png" />
+
+Main UI on product screen ( button turned on )
+
+<img src="http://s32.postimg.org/luai7kzf9/screenshot_2.png" />
 
 Settings screen
 
