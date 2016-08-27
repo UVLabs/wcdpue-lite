@@ -21,9 +21,6 @@ A simple plugin used to send emails to customers who bought a downloadable produ
 1. Activate the plugin through the 'Plugins' screen in WordPress
 1. Use the Settings->Product Update Emails screen to configure the plugin
 
-**Email Bursts**
-
-Used for setting the amount of emails addresses to grab and send emails to every time the scheduled time hits.
 
 == Upgrade Notice ==
 
@@ -33,7 +30,7 @@ Used for setting the amount of emails addresses to grab and send emails to every
 2. Plugin UI on product page (button turned on).
 3. Plugin Settings page.
 4. Update email sent to buyers of the product.
-5. Customable email body, more customization soon.
+5. Custom email body, more customization soon.
 
 == Changelog ==
 
@@ -41,11 +38,19 @@ Used for setting the amount of emails addresses to grab and send emails to every
 
 Initial release
 
+=1.0.1=
+
+Small CSS fix
+
 == Frequently Asked Questions ==
 
 = HTML Email Templates? =
 
 Planned.
+
+= What are Email Bursts? =
+
+Used for setting the amount of emails addresses to grab and send emails to every time the scheduled time hits.
 
 = What Happens if I set the email bursts amount to more than 10? =
 
