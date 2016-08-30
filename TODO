@@ -23,3 +23,5 @@
 --This wont work on save_post action because it redirects right after. Need to show message after page refresh.
 
 -Show number of scheduled mail in queue on settings page.
+
+-Make global variables or constants for email body, footer etc

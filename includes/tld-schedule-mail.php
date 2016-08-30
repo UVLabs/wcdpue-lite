@@ -35,19 +35,26 @@ function tld_wcdpue_send_schedule_mail(){
 
   $tld_wcdpue_email_subject = esc_attr( get_option( 'tld-wcdpue-email-subject' ) );
   $tld_wcdpue_email_body = esc_attr( get_option( 'tld-wcdpue-email-body' ) );
+  $tld_wcdpue_email_footer = esc_attr( get_option( 'tld-wcdpue-email-footer' ) );
   $tld_wcdpue_email_bursts_count = esc_attr( get_option( 'tld-wcdpue-email-bursts-count' ) );
 
   if ( empty( $tld_wcdpue_email_subject ) ){
-    $tld_wcdpue_email_subject = 'Your Downloadable Product has been updated!';
+    $tld_wcdpue_email_subject = 'A product you bought has been updated!';
   }
 
   if ( empty( $tld_wcdpue_email_body ) ){
     $tld_wcdpue_email_body = 'There is a new update for your product:';
   }
 
-  if ( empty( $tld_wcdpue_email_bursts_count ) ){
-    $tld_wcdpue_email_bursts_count = 5; //limit to 5
+  if ( empty( $tld_wcdpue_email_footer ) ){
+    $tld_wcdpue_email_footer = 'Log in to download it from your account now:';
   }
+
+  if ( empty( $tld_wcdpue_email_bursts_count ) ){
+    $tld_wcdpue_email_bursts_count = 5; //limit number of emails sent per schedule hit to 5
+  }
+
+  $tld_account_url = esc_url ( get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) );
 
   global $wpdb;
   $tld_tbl_prefix = $wpdb->prefix;
@@ -63,7 +70,7 @@ function tld_wcdpue_send_schedule_mail(){
     $tld_the_email = $result->user_email;
     $subject = $tld_wcdpue_email_subject;
     $message = $tld_wcdpue_email_body . "\n\n";
-    $message .= $tld_post_title . ": " . $tld_prod_url . "\n\nLog in to download it from your account now -> " . $tld_home_url;
+    $message .= $tld_post_title . ": " . $tld_prod_url . "\n\n" . $tld_wcdpue_email_footer . "\n\n" . $tld_account_url;
     wp_mail( $tld_the_email, $subject, $message );
     $wpdb->delete( $tld_the_table, array( 'id' => $result->id ) );   //delete the current row in loop after mail sent
     sleep(1); //short breath, no rush.
