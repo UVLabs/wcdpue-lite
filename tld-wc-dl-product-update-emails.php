@@ -95,17 +95,24 @@ function tld_get_product_owners(){
 	WHERE ( product_id=$product_id )
 	AND (access_expires > NOW() OR access_expires IS NULL )
 	");
-	echo $query_result;
-
+	echo $query_result . '<br><br>';
+	global $post;
+	global $woocommerce;
+	global $product;
+	$product = new WC_Product(get_the_ID());
+	var_dump ($product);
+	#var_dump($post);
+	#var_dump($woocommerce);
 }
 
 function tld_metabox_fields(){
+
 	?>
 
 	<div class="tld-wcdpue-center-text">
 
 		<div>
-			<p>Buyers with download access: <?php tld_get_product_owners() ?></p>
+			<p>Buyers with download access: <?php tld_get_product_owners(); ?></p>
 		</div>
 
 		<div>
