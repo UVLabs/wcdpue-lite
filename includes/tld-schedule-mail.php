@@ -73,7 +73,7 @@ function tld_wcdpue_send_schedule_mail(){
     $message .= $tld_post_title . ": " . $tld_prod_url . "\n\n" . $tld_wcdpue_email_footer . "\n\n" . $tld_account_url;
     wp_mail( $tld_the_email, $subject, $message );
     $wpdb->delete( $tld_the_table, array( 'id' => $result->id ) );   //delete the current row in loop after mail sent
-    sleep(1); //short breath, no rush.
+    sleep(2); //short breath, no rush.
 
   }
 

@@ -25,3 +25,7 @@
 -Show number of scheduled mail in queue on settings page.
 
 -Make global variables or constants for email body, footer etc
+
+-Delete cron schedule from db after db uninstall runs in uninstall.php
+
+-Fix plugin not working on variable downloadable products

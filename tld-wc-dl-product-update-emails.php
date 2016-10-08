@@ -67,14 +67,18 @@ add_filter( 'cron_schedules', 'tld_wcdpue_cron_quarter_hour' );
 
 function tld_wcdpue_metabox(){
 
-	add_meta_box(
-	'tld_wcdpue_metabox',
-	'Downloadable Product Email Options',
-	'tld_metabox_fields',
-	'',
-	'side',
-	'high'
-);
+	global $pagenow;
+	if ( $pagenow != 'post-new.php' ){
+		add_meta_box(
+		'tld_wcdpue_metabox',
+		'Downloadable Product Email Options',
+		'tld_metabox_fields',
+		'',
+		'side',
+		'high'
+	);
+
+}
 
 }
 add_action('add_meta_boxes_product', 'tld_wcdpue_metabox', 10, 2);
@@ -83,15 +87,16 @@ function tld_get_product_owners(){
 
 	global $wpdb;
 	$product_id = $_GET['post'];
-	$tld_tbl_prefix = $wpdb->prefix;
-	$tld_the_table = $tld_tbl_prefix . 'woocommerce_downloadable_product_permissions';
+	$tld_wcdpue_tbl_prefix = $wpdb->prefix;
+	$tld_wcdpue_the_table = $tld_wcdpue_tbl_prefix . 'woocommerce_downloadable_product_permissions';
 	$query_result = $wpdb->get_var(
 	"SELECT COUNT(*)
-	FROM $tld_the_table
+	FROM $tld_wcdpue_the_table
 	WHERE ( product_id=$product_id )
 	AND (access_expires > NOW() OR access_expires IS NULL )
 	");
 	echo $query_result;
+
 }
 
 function tld_metabox_fields(){
@@ -138,11 +143,11 @@ function tld_wcdpue_post_saved( $post_id ) {
 		return;
 
 		global $wpdb;
-		$tld_tbl_prefix = $wpdb->prefix;
-		$tld_the_table = $tld_tbl_prefix . 'woocommerce_downloadable_product_permissions';
+		$tld_wcdpue_tbl_prefix = $wpdb->prefix;
+		$tld_wcdpue_the_table = $tld_wcdpue_tbl_prefix . 'woocommerce_downloadable_product_permissions';
 		$query_result = $wpdb->get_results(
 		"SELECT *
-		FROM $tld_the_table
+		FROM $tld_wcdpue_the_table
 		WHERE ( product_id = $post_id )
 		AND (access_expires > NOW() OR access_expires IS NULL )
 		"
