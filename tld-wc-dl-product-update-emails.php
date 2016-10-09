@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: TLD WooCommerce Downloadable Product Update Emails
-Plugin URI: http://soaringleads.com
+Plugin URI: http://uriahsvictor.com
 Description: Inform customers when there is an update to their downloadable product via email.
-Version: 1.0.1
+Version: 1.1.0
 Author: Uriahs Victor
-Author URI: http://soaringleads.com
+Author URI: http://uriahsvictor.com
 License: GPL2
 */
 
@@ -67,14 +67,18 @@ add_filter( 'cron_schedules', 'tld_wcdpue_cron_quarter_hour' );
 
 function tld_wcdpue_metabox(){
 
-	add_meta_box(
-	'tld_wcdpue_metabox',
-	'Downloadable Product Email Options',
-	'tld_metabox_fields',
-	'',
-	'side',
-	'high'
-);
+	global $pagenow;
+	if ( $pagenow != 'post-new.php' ){
+		add_meta_box(
+		'tld_wcdpue_metabox',
+		'Downloadable Product Email Options',
+		'tld_metabox_fields',
+		'',
+		'side',
+		'high'
+	);
+
+}
 
 }
 add_action('add_meta_boxes_product', 'tld_wcdpue_metabox', 10, 2);
@@ -83,24 +87,27 @@ function tld_get_product_owners(){
 
 	global $wpdb;
 	$product_id = $_GET['post'];
-	$tld_tbl_prefix = $wpdb->prefix;
-	$tld_the_table = $tld_tbl_prefix . 'woocommerce_downloadable_product_permissions';
+	$tld_wcdpue_tbl_prefix = $wpdb->prefix;
+	$tld_wcdpue_the_table = $tld_wcdpue_tbl_prefix . 'woocommerce_downloadable_product_permissions';
 	$query_result = $wpdb->get_var(
 	"SELECT COUNT(*)
-	FROM $tld_the_table
+	FROM $tld_wcdpue_the_table
 	WHERE ( product_id=$product_id )
 	AND (access_expires > NOW() OR access_expires IS NULL )
 	");
 	echo $query_result;
+
+
 }
 
 function tld_metabox_fields(){
+
 	?>
 
 	<div class="tld-wcdpue-center-text">
 
 		<div>
-			<p>Buyers with download access: <?php tld_get_product_owners() ?></p>
+			<p>Buyers with download access: <?php tld_get_product_owners(); ?></p>
 		</div>
 
 		<div>
@@ -129,19 +136,6 @@ function tld_metabox_fields(){
 	<?php
 }
 
-function tld_wcdpue_admin_notice(){
-
-	function tld_wcdpue_the_notice(){
-		?>
-		<div class="notice notice-success is-dismissible">
-			<p>Product update emails scheduled!</p>
-		</div>
-		<?php
-
-	}
-	add_action( 'admin_notices', 'tld_wcdpue_the_notice' );
-
-}
 
 function tld_wcdpue_post_saved( $post_id ) {
 
@@ -151,12 +145,12 @@ function tld_wcdpue_post_saved( $post_id ) {
 		return;
 
 		global $wpdb;
-		$tld_tbl_prefix = $wpdb->prefix;
-		$tld_the_table = $tld_tbl_prefix . 'woocommerce_downloadable_product_permissions';
+		$tld_wcdpue_tbl_prefix = $wpdb->prefix;
+		$tld_wcdpue_the_table = $tld_wcdpue_tbl_prefix . 'woocommerce_downloadable_product_permissions';
 		$query_result = $wpdb->get_results(
 		"SELECT *
-		FROM $tld_the_table
-		WHERE ( product_id=$post_id )
+		FROM $tld_wcdpue_the_table
+		WHERE ( product_id = $post_id )
 		AND (access_expires > NOW() OR access_expires IS NULL )
 		"
 	);
@@ -165,14 +159,21 @@ function tld_wcdpue_post_saved( $post_id ) {
 
 	$tld_wcdpue_email_subject = esc_attr( get_option( 'tld-wcdpue-email-subject' ) );
 	$tld_wcdpue_email_body = esc_attr( get_option( 'tld-wcdpue-email-body' ) );
+	$tld_wcdpue_email_footer = esc_attr( get_option( 'tld-wcdpue-email-footer' ) );
 
 	if ( empty( $tld_wcdpue_email_subject ) ){
-		$tld_wcdpue_email_subject = 'Your Downloadable Product has been updated!';
+		$tld_wcdpue_email_subject = 'A product you bought has been updated!';
 	}
 
 	if ( empty( $tld_wcdpue_email_body ) ){
 		$tld_wcdpue_email_body = 'There is a new update for your product:';
 	}
+
+	if ( empty( $tld_wcdpue_email_footer ) ){
+		$tld_wcdpue_email_footer = 'Log in to download it from your account now:';
+	}
+
+	$tld_account_url = esc_url ( get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) );
 
 	$tld_option_selected = $_POST['tld-option-selected'];
 
@@ -182,11 +183,10 @@ function tld_wcdpue_post_saved( $post_id ) {
 
 			$post_title = get_the_title( $post_id );
 			$tld_prod_url = esc_url( get_permalink( $post_id ) );
-			$tld_home_url = esc_url( home_url() );
 			$tld_the_email = $tld_email_address->user_email;
 			$subject = $tld_wcdpue_email_subject;
 			$message = $tld_wcdpue_email_body . "\n\n";
-			$message .= $post_title . ": " . $tld_prod_url . "\n\nLog in to download it from your account now -> " . $tld_home_url;
+			$message .= $post_title . ": " . $tld_prod_url . "\n\n" . $tld_wcdpue_email_footer . "\n\n" . $tld_account_url;
 			wp_mail( $tld_the_email, $subject, $message );
 
 		}
@@ -199,7 +199,6 @@ function tld_wcdpue_post_saved( $post_id ) {
 			$post_url = esc_url( get_permalink( $post_id ) );
 			$tld_home_url = esc_url( home_url() );
 			$tld_the_email = $tld_email_address->user_email;
-			$message .= $post_title . "\n\nLog in to download it from your account now -> " . $tld_home_url;
 			$tld_the_schedule_table = $tld_tbl_prefix . 'woocommerce_downloadable_product_emails_tld';
 			$wpdb->insert(
 			$tld_the_schedule_table,
@@ -213,8 +212,6 @@ function tld_wcdpue_post_saved( $post_id ) {
 		);
 
 	}
-
-	add_option( 'tld-wcdpue-schedule-set', 1 );
 
 }
 
