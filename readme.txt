@@ -7,7 +7,7 @@ Author URI:        http://uriahsvictor.com
 Author:            Uriahs Victor
 Requires at least: 4.1
 Tested up to:      4.6.1
-Stable tag:        1.0.1
+Stable tag:        1.1.0
 Version:           1.1.0
 License:           GPLv2 of later
 
