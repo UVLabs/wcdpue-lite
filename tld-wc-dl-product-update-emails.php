@@ -56,8 +56,8 @@ function tld_wcdpue_cron_quarter_hour($schedules){
 
 	$schedules['tld_quick_cron'] = array(
 
-		'interval' => 30,
-		'display' => __( 'Every 30 seconds' )
+		'interval' => 900,
+		'display' => __( 'Every 15 Minutes' )
 
 	);
 	return $schedules;
@@ -95,14 +95,9 @@ function tld_get_product_owners(){
 	WHERE ( product_id=$product_id )
 	AND (access_expires > NOW() OR access_expires IS NULL )
 	");
-	echo $query_result . '<br><br>';
-	global $post;
-	global $woocommerce;
-	global $product;
-	$product = new WC_Product(get_the_ID());
-	var_dump ($product);
-	#var_dump($post);
-	#var_dump($woocommerce);
+	echo $query_result;
+
+
 }
 
 function tld_metabox_fields(){

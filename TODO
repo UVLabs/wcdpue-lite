@@ -28,4 +28,4 @@
 
 -Delete cron schedule from db after db uninstall runs in uninstall.php
 
--Fix plugin not working on variable downloadable products
+-Only show metabox if product is downloadable

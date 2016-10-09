@@ -4,11 +4,11 @@ Plugin Name:       TLD WooCommerce Downloadable Product Update Emails
 Plugin URI:        https://github.com/UVLabs/WooCommerce-Downloadable-Product-Update-Emails
 Tags:              woocommerce, emails, downloadable, products, update, schedule, ecommerce, e-commerce, customers, ebook, email customers, software, music, videos
 Author URI:        http://uriahsvictor.com
-Author:            Uriahs Victor (TheLoneDeveloper)
+Author:            Uriahs Victor
 Requires at least: 4.1
-Tested up to:      4.6
+Tested up to:      4.6.1
 Stable tag:        1.0.1
-Version:           1.0.1
+Version:           1.1.0
 License:           GPLv2 of later
 
 == Description ==
@@ -34,21 +34,21 @@ A simple plugin used to send emails to customers who bought a downloadable produ
 
 == Changelog ==
 
-=1.0.0=
+=1.1.0=
 
-Initial release
+-Tested with WP 4.6.1
+-Removed "Current schedule" from settings page, dropdown menu will now stay at the selected schedule.
+-Added custom email footer option.
+-Metabox now only appears when editing an already published product.
+-Minor default changes.
 
 =1.0.1=
 
 Small CSS fix
 
-=1.1.0=
+=1.0.0=
 
--Tested with WP 4.6.
--Removed "Current schedule" from settings page, dropdown menu will now stay at the selected schedule.
--Added custom email footer option.
--Metabox now only appears when editing an already published product.
--Minor default changes.
+Initial release
 
 == Frequently Asked Questions ==
 

@@ -9,6 +9,7 @@ function tld_wcdpue_add_admin_menu() {
 
   //call register settings function
   add_action( 'admin_init', 'tld_wcdpue_settings' );
+  
 }
 
 function tld_wcdpue_get_email_body(){

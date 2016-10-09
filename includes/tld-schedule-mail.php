@@ -1,5 +1,4 @@
 <?php
-
 function tld_wcdpue_activate_schedule(){
 
   $tld_wcdpue_cur_recurrence = get_option('tld-wcdpue-schedule-setting-value');
