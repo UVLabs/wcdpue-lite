@@ -3,8 +3,6 @@
 License: GPLv2 or later<br>
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Current Version: 1.1.0
-
 A simple plugin used to send emails to customers who bought a downloadable product, letting them know that there's been an update to their download.
 
 Main UI on product screen (button turned off)
