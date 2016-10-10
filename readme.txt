@@ -7,8 +7,8 @@ Author URI:        http://uriahsvictor.com
 Author:            Uriahs Victor
 Requires at least: 4.1
 Tested up to:      4.6.1
-Stable tag:        1.1.0
-Version:           1.1.0
+Stable tag:        1.1.1
+Version:           1.1.1
 License:           GPLv2 of later
 
 == Description ==
@@ -33,22 +33,26 @@ A simple plugin used to send emails to customers who bought a downloadable produ
 5. Customable email body, more customization soon.
 
 == Changelog ==
+**1.1.1**
 
-=1.1.0=
+* Fix a bug which caused the schedule feature to not work.
+*Please go back to any previously updated product and click update again if you used the plugin scheduling feature during version 1.1.0*
 
--Tested with WP 4.6.1
--Removed "Current schedule" from settings page, dropdown menu will now stay at the selected schedule.
--Added custom email footer option.
--Metabox now only appears when editing an already published product.
--Minor default changes.
+**1.1.0**
 
-=1.0.1=
+* Tested with WP 4.6.1
+* Removed "Current schedule" from settings page, dropdown menu will now stay at the selected schedule.
+* Added custom email footer option.
+* Metabox now only appears when editing an already published product.
+* Minor default changes.
 
-Small CSS fix
+**1.0.1**
 
-=1.0.0=
+* Small CSS fix
 
-Initial release
+**1.0.0**
+
+* Initial release
 
 == Frequently Asked Questions ==
 
