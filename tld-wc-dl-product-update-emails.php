@@ -3,7 +3,7 @@
 Plugin Name: TLD WooCommerce Downloadable Product Update Emails
 Plugin URI: http://uriahsvictor.com
 Description: Inform customers when there is an update to their downloadable product via email.
-Version: 1.1.0
+Version: 1.1.1
 Author: Uriahs Victor
 Author URI: http://uriahsvictor.com
 License: GPL2
@@ -199,7 +199,7 @@ function tld_wcdpue_post_saved( $post_id ) {
 			$post_url = esc_url( get_permalink( $post_id ) );
 			$tld_home_url = esc_url( home_url() );
 			$tld_the_email = $tld_email_address->user_email;
-			$tld_the_schedule_table = $tld_tbl_prefix . 'woocommerce_downloadable_product_emails_tld';
+			$tld_the_schedule_table = $tld_wcdpue_tbl_prefix . 'woocommerce_downloadable_product_emails_tld';
 			$wpdb->insert(
 			$tld_the_schedule_table,
 			array(
