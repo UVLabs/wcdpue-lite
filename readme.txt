@@ -33,6 +33,9 @@ A simple plugin used to send emails to customers who bought a downloadable produ
 5. Customable email body, more customization soon.
 
 == Changelog ==
+**1.1.2**
+* Metabox now only shows if product is a downloadable product.
+
 **1.1.1**
 
 * Fix a bug which caused the schedule feature to not work.
