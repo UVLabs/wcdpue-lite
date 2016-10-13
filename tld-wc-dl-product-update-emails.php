@@ -31,7 +31,7 @@ function tld_wcdpue_load_assets() {
 
 	wp_enqueue_script( 'tld_wcdpue_uilang', plugin_dir_url( __FILE__ ) . 'assets/js/uilang.js' );
 	wp_enqueue_script( 'tld_wcdpue_scripts', plugin_dir_url( __FILE__ ) . 'assets/js/tld-scripts.js?v1.0.0' );
-	wp_enqueue_style( 'tld_wcdpue_styles', plugin_dir_url( __FILE__ ) . 'assets/css/style.css?v1.0.1' );
+	wp_enqueue_style( 'tld_wcdpue_styles', plugin_dir_url( __FILE__ ) . 'assets/css/style.css?v1.0.2' );
 
 }
 add_action( 'admin_enqueue_scripts', 'tld_wcdpue_load_assets' );
@@ -69,10 +69,10 @@ function tld_wcdpue_metabox(){
 
 	global $pagenow;
 	$tld_wcdpue_the_product = wc_get_product( get_the_ID() );
-	if ( $pagenow != 'post-new.php' && $tld_wcdpue_the_product->is_downloadable( 'yes' ) ){
+	if ( $pagenow != 'post-new.php' && $tld_wcdpue_the_product->is_downloadable( 'yes' ) && ! $tld_wcdpue_the_product->is_type('variable') ){
 		add_meta_box(
 		'tld_wcdpue_metabox',
-		'Downloadable Product Email Options',
+		'Email Options',
 		'tld_metabox_fields',
 		'',
 		'side',
@@ -87,13 +87,14 @@ add_action('add_meta_boxes_product', 'tld_wcdpue_metabox', 10, 2);
 function tld_get_product_owners(){
 
 	global $wpdb;
-	$product_id = $_GET['post'];
+	$tld_wcdpue_product_id = get_the_ID();
 	$tld_wcdpue_tbl_prefix = $wpdb->prefix;
-	$tld_wcdpue_the_table = $tld_wcdpue_tbl_prefix . 'woocommerce_downloadable_product_permissions';
+	$tld_wcdpue_dls_table = $tld_wcdpue_tbl_prefix . 'woocommerce_downloadable_product_permissions';
+	// try making above global to use in save posts event
 	$query_result = $wpdb->get_var(
 	"SELECT COUNT(*)
-	FROM $tld_wcdpue_the_table
-	WHERE ( product_id=$product_id )
+	FROM $tld_wcdpue_dls_table
+	WHERE ( product_id = $tld_wcdpue_product_id )
 	AND (access_expires > NOW() OR access_expires IS NULL )
 	");
 	echo $query_result;
@@ -147,10 +148,10 @@ function tld_wcdpue_post_saved( $post_id ) {
 
 		global $wpdb;
 		$tld_wcdpue_tbl_prefix = $wpdb->prefix;
-		$tld_wcdpue_the_table = $tld_wcdpue_tbl_prefix . 'woocommerce_downloadable_product_permissions';
+		$tld_wcdpue_dls_table = $tld_wcdpue_tbl_prefix . 'woocommerce_downloadable_product_permissions';
 		$query_result = $wpdb->get_results(
 		"SELECT *
-		FROM $tld_wcdpue_the_table
+		FROM $tld_wcdpue_dls_table
 		WHERE ( product_id = $post_id )
 		AND (access_expires > NOW() OR access_expires IS NULL )
 		"

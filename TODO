@@ -34,3 +34,5 @@
 -Go to schedule mail set up and if no active cron schedule set then after setting the default to daily, update the option so the settings page could get the correct value
 
 -In query when checking for emails to add to the custom table, also check for download remaining not = 0
+
+-rename variables
