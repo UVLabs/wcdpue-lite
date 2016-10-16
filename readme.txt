@@ -35,6 +35,7 @@ A simple plugin used to send emails to customers who bought a downloadable produ
 == Changelog ==
 
 **1.1.2**
+
 * Metabox now only shows if product is a downloadable product.
 * Metabox will not show if is a downloadable variable product.
 * Minor metabox text changes
