@@ -16,8 +16,8 @@ if ( $tld_wcdpue_byebye == 'on' ){
   delete_option('tld_table_version');
 
   global $wpdb;
-  $tld_tbl_name = $wpdb->prefix."woocommerce_downloadable_product_emails_tld";
-  $wpdb->query("DROP TABLE IF EXISTS $tld_tbl_name");
+  $tld_wcdpue_tbl = $wpdb->prefix."woocommerce_downloadable_product_emails_tld";
+  $wpdb->query("DROP TABLE IF EXISTS $tld_wcdpue_tbl");
 
 }
 

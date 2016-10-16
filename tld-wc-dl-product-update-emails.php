@@ -99,7 +99,6 @@ function tld_get_product_owners(){
 	");
 	echo $query_result;
 
-
 }
 
 function tld_metabox_fields(){
@@ -125,13 +124,13 @@ function tld_metabox_fields(){
 			<input type="radio" name="tld-option-selected" value="schedule" checked><span>Schedule</span>
 		</div>
 
-		<?php //switch magic happens below ?>
+		<!-- switch magic happens below -->
 
 		<code style="display: none;">
 			clicking on "#tld-switch" toggles class "active" on "#tld-switch"
 		</code>
 
-		<?php // end magic ?>
+		<!-- end magic -->
 
 	</div>
 
@@ -175,40 +174,40 @@ function tld_wcdpue_post_saved( $post_id ) {
 		$tld_wcdpue_email_footer = 'Log in to download it from your account now:';
 	}
 
-	$tld_account_url = esc_url ( get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) );
+	$tld_wcdpue_account_url = esc_url ( get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) );
 
-	$tld_option_selected = $_POST['tld-option-selected'];
+	$tld_wcdpue_option_selected = $_POST['tld-option-selected'];
 
-	if ( $tld_option_selected == 'immediately' ){
+	if ( $tld_wcdpue_option_selected == 'immediately' ){
 
-		foreach ( $query_result as $tld_email_address ){
+		foreach ( $query_result as $tld_wcdpue_email_address ){
 
-			$post_title = get_the_title( $post_id );
-			$tld_prod_url = esc_url( get_permalink( $post_id ) );
-			$tld_the_email = $tld_email_address->user_email;
-			$subject = $tld_wcdpue_email_subject;
-			$message = $tld_wcdpue_email_body . "\n\n";
-			$message .= $post_title . ": " . $tld_prod_url . "\n\n" . $tld_wcdpue_email_footer . "\n\n" . $tld_account_url;
-			wp_mail( $tld_the_email, $subject, $message );
+			$tld_wcdpue_post_title = get_the_title( $post_id );
+			$tld_wcdpue_product_url = esc_url( get_permalink( $post_id ) );
+			$tld_wcdpue_buyer_email_address = $tld_wcdpue_email_address->user_email;
+			$tld_wcdpue_email_subject = $tld_wcdpue_email_subject;
+			$tld_wcdpue_email_message = $tld_wcdpue_email_body . "\n\n";
+			$tld_wcdpue_email_message .= $tld_wcdpue_post_title . ": " . $tld_wcdpue_product_url . "\n\n" . $tld_wcdpue_email_footer . "\n\n" . $tld_wcdpue_account_url;
+			wp_mail( $tld_wcdpue_buyer_email_address, $tld_wcdpue_email_subject, $tld_wcdpue_email_message );
 
 		}
 
 	}else{
 
-		foreach ( $query_result as $tld_email_address ){
+		foreach ( $query_result as $tld_wcdpue_email_address ){
 
-			$post_title = get_the_title( $post_id );
+			/*$tld_wcdpue_post_title = get_the_title( $post_id );
 			$post_url = esc_url( get_permalink( $post_id ) );
-			$tld_home_url = esc_url( home_url() );
-			$tld_the_email = $tld_email_address->user_email;
-			$tld_the_schedule_table = $tld_wcdpue_tbl_prefix . 'woocommerce_downloadable_product_emails_tld';
+			$tld_home_url = esc_url( home_url() );*/
+			$tld_wcdpue_buyer_email_address = $tld_wcdpue_email_address->user_email;
+			$tld_wcdpue_the_scheduling_table = $tld_wcdpue_tbl_prefix . 'woocommerce_downloadable_product_emails_tld';
 			$wpdb->insert(
-			$tld_the_schedule_table,
+			$tld_wcdpue_the_scheduling_table ,
 			array(
 
 				'id' => '',
 				'product_id' => $post_id,
-				'user_email' => $tld_the_email,
+				'user_email' => $tld_wcdpue_buyer_email_address,
 
 			)
 		);
@@ -220,7 +219,6 @@ function tld_wcdpue_post_saved( $post_id ) {
 }
 //delete our cookie since we're done with it
 setcookie("tld-wcdpue-cookie", "tld-switch-cookie", time() - 3600);
-
 }
 
 add_action('save_post', 'tld_wcdpue_post_saved');

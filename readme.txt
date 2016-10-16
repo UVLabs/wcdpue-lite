@@ -1,5 +1,5 @@
 === Plugin Name ===
-
+Contributors: uriahs-victor
 Plugin Name:       TLD WooCommerce Downloadable Product Update Emails
 Plugin URI:        https://github.com/UVLabs/WooCommerce-Downloadable-Product-Update-Emails
 Tags:              woocommerce, emails, downloadable, products, update, schedule, ecommerce, e-commerce, customers, ebook, email customers, software, music, videos

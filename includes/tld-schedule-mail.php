@@ -5,13 +5,13 @@ function tld_wcdpue_activate_schedule(){
 
   if ( !empty( $tld_wcdpue_cur_recurrence ) ){
 
-    $active_cron_schedules = wp_get_schedules();
+    $tld_wcdpue_active_cron_schedules = wp_get_schedules();
 
-    foreach ( $active_cron_schedules as $key => $value ) {
+    foreach ( $tld_wcdpue_active_cron_schedules as $key => $value ) {
 
       if ( $key == $tld_wcdpue_cur_recurrence ){
 
-        $tld_wcdpue_wait_time = $value['interval'];
+        $tld_wcdpue_wait_time = $value['interval']; //to prevent premature firing of email
 
       }
 
@@ -22,7 +22,7 @@ function tld_wcdpue_activate_schedule(){
   }else{
 
     wp_schedule_event( time(), 'daily', 'tld_wcdpue_email_burst' );
-
+    update_option( 'tld-wcdpue-schedule-setting-value', 'daily' );
   }
 
 }
