@@ -22,17 +22,21 @@
 -Give user a visual representation that emails were actually sent.
 --This wont work on save_post action because it redirects right after. Need to show message after page refresh.
 
+-Only show metabox if product is downloadable
+--Fixed (as of v1.1.2)
+
+-Go to schedule mail set up and if no active cron schedule set then after setting the default to daily, update the option so the settings page could get the correct value
+--Fixed (as of v1.1.2)
+
+-In query when checking for emails to add to the custom table, also check for download remaining not = 0
+
 -Show number of scheduled mail in queue on settings page.
 
 -Make global variables for email body, footer etc
 
 -Delete cron schedule from db after db uninstall runs in uninstall.php
 
--Only show metabox if product is downloadable
---Fixed (as of v1.1.2)
+-Rename variables
+--ongoing
 
--Go to schedule mail set up and if no active cron schedule set then after setting the default to daily, update the option so the settings page could get the correct value
-
--In query when checking for emails to add to the custom table, also check for download remaining not = 0
-
--rename variables
+-Check value option names

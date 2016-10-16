@@ -2,7 +2,7 @@
 /*
 Plugin Name: TLD WooCommerce Downloadable Product Update Emails
 Plugin URI: http://uriahsvictor.com
-Description: Inform customers when there is an update to their downloadable product via email.
+Description: Inform customers when there is an update to their WooCommerce downloadable product via email.
 Version: 1.1.2
 Author: Uriahs Victor
 Author URI: http://uriahsvictor.com
@@ -137,6 +137,9 @@ function tld_metabox_fields(){
 	<?php
 }
 
+function tld_wcdpue_get_creds(){
+	return 'Sent using WCDPUE: http://bit.ly/wcdpue';
+}
 
 function tld_wcdpue_post_saved( $post_id ) {
 
@@ -187,7 +190,7 @@ function tld_wcdpue_post_saved( $post_id ) {
 			$tld_wcdpue_buyer_email_address = $tld_wcdpue_email_address->user_email;
 			$tld_wcdpue_email_subject = $tld_wcdpue_email_subject;
 			$tld_wcdpue_email_message = $tld_wcdpue_email_body . "\n\n";
-			$tld_wcdpue_email_message .= $tld_wcdpue_post_title . ": " . $tld_wcdpue_product_url . "\n\n" . $tld_wcdpue_email_footer . "\n\n" . $tld_wcdpue_account_url;
+			$tld_wcdpue_email_message .= $tld_wcdpue_post_title . ": " . $tld_wcdpue_product_url . "\n\n" . $tld_wcdpue_email_footer . "\n\n" . $tld_wcdpue_account_url /*. "\n\n\n" . apply_filters( 'tld_wcdpue_plugin_creds', tld_wcdpue_get_creds() )*/;
 			wp_mail( $tld_wcdpue_buyer_email_address, $tld_wcdpue_email_subject, $tld_wcdpue_email_message );
 
 		}
@@ -196,9 +199,6 @@ function tld_wcdpue_post_saved( $post_id ) {
 
 		foreach ( $query_result as $tld_wcdpue_email_address ){
 
-			/*$tld_wcdpue_post_title = get_the_title( $post_id );
-			$post_url = esc_url( get_permalink( $post_id ) );
-			$tld_home_url = esc_url( home_url() );*/
 			$tld_wcdpue_buyer_email_address = $tld_wcdpue_email_address->user_email;
 			$tld_wcdpue_the_scheduling_table = $tld_wcdpue_tbl_prefix . 'woocommerce_downloadable_product_emails_tld';
 			$wpdb->insert(

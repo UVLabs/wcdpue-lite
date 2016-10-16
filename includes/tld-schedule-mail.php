@@ -53,25 +53,24 @@ function tld_wcdpue_send_schedule_mail(){
     $tld_wcdpue_email_bursts_count = 5; //limit number of emails sent per schedule hit to 5
   }
 
-  $tld_account_url = esc_url ( get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) );
+  $tld_wcdpue_account_url = esc_url ( get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) );
 
   global $wpdb;
-  $tld_tbl_prefix = $wpdb->prefix;
-  $tld_the_table = $tld_tbl_prefix . 'woocommerce_downloadable_product_emails_tld';
-  $query_result = $wpdb->get_results( "SELECT * FROM $tld_the_table ORDER BY id ASC LIMIT $tld_wcdpue_email_bursts_count" );
+  $tld_wcdpue_tbl_prefix = $wpdb->prefix;
+  $tld_wcdpue_the_scheduling_table = $tld_wcdpue_tbl_prefix . 'woocommerce_downloadable_product_emails_tld';
+  $query_result = $wpdb->get_results( "SELECT * FROM $tld_wcdpue_the_scheduling_table ORDER BY id ASC LIMIT $tld_wcdpue_email_bursts_count" );
 
   foreach ( $query_result as $result ){
 
-    $tld_prod_id = $result->product_id;
-    $tld_post_title = get_the_title( $tld_prod_id );
-    $tld_prod_url = esc_url( get_permalink( $tld_prod_id ) );
-    $tld_home_url = esc_url( home_url() );
-    $tld_the_email = $result->user_email;
-    $subject = $tld_wcdpue_email_subject;
-    $message = $tld_wcdpue_email_body . "\n\n";
-    $message .= $tld_post_title . ": " . $tld_prod_url . "\n\n" . $tld_wcdpue_email_footer . "\n\n" . $tld_account_url;
-    wp_mail( $tld_the_email, $subject, $message );
-    $wpdb->delete( $tld_the_table, array( 'id' => $result->id ) );   //delete the current row in loop after mail sent
+    $tld_wcdpue_product_id = $result->product_id;
+    $tld_wcdpue_post_title = get_the_title( $tld_wcdpue_product_id );
+    $tld_wcdpue_product_url = esc_url( get_permalink( $tld_wcdpue_product_id ) );
+    $tld_wcdpue_home_url = esc_url( home_url() );
+    $tld_wcdpue_buyer_email_address = $result->user_email;
+    $tld_wcdpue_email_message = $tld_wcdpue_email_body . "\n\n";
+    $tld_wcdpue_email_message .= $tld_wcdpue_post_title . ": " . $tld_wcdpue_product_url . "\n\n" . $tld_wcdpue_email_footer . "\n\n" . $tld_wcdpue_account_url /*. "\n\n\n" . apply_filters( 'tld_wcdpue_plugin_creds', tld_wcdpue_get_creds() )*/;
+    wp_mail( $tld_wcdpue_buyer_email_address, $tld_wcdpue_email_subject, $tld_wcdpue_email_message );
+    $wpdb->delete( $tld_wcdpue_the_scheduling_table, array( 'id' => $result->id ) );   //delete the current row in loop after mail sent
     sleep(2); //short breath, no rush.
 
   }
