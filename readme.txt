@@ -1,14 +1,14 @@
 === Plugin Name ===
-
+Contributors: uriahs-victor
 Plugin Name:       TLD WooCommerce Downloadable Product Update Emails
 Plugin URI:        https://github.com/UVLabs/WooCommerce-Downloadable-Product-Update-Emails
-Tags:              woocommerce, emails, downloadable, products, update, schedule, ecommerce, e-commerce, customers, ebook, email customers, software, music, videos
+Tags:              woocommerce, emails, downloadable, products, update, schedule, ecommerce, e-commerce, customers, ebook, email customers, software, music, videos, notify customers
 Author URI:        http://uriahsvictor.com
 Author:            Uriahs Victor
 Requires at least: 4.1
 Tested up to:      4.6.1
-Stable tag:        1.1.1
-Version:           1.1.1
+Stable tag:        1.1.3
+Version:           1.1.3
 License:           GPLv2 of later
 
 == Description ==
@@ -33,6 +33,18 @@ A simple plugin used to send emails to customers who bought a downloadable produ
 5. Customable email body, more customization soon.
 
 == Changelog ==
+
+**1.1.3**
+
+* Fix changelog
+
+**1.1.2**
+
+* Metabox now only shows if product is a downloadable product.
+* Metabox will not show if is a downloadable variable product.
+* Minor metabox text changes
+* Minor source code changes
+
 **1.1.1**
 
 * Fix a bug which caused the schedule feature to not work.
@@ -56,9 +68,13 @@ A simple plugin used to send emails to customers who bought a downloadable produ
 
 == Frequently Asked Questions ==
 
+= Email sends as wordpress.example.com =
+
+I used wp_mail in the plugin so you could easily override the default send from email using an SMTP plugin such as: https://wordpress.org/plugins/postman-smtp/
+
 = HTML Email Templates? =
 
-Planned.
+Will be available in Pro version of plugin.
 
 = What are Email Bursts? =
 

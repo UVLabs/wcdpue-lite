@@ -2,8 +2,8 @@
 /*
 Plugin Name: TLD WooCommerce Downloadable Product Update Emails
 Plugin URI: http://uriahsvictor.com
-Description: Inform customers when there is an update to their downloadable product via email.
-Version: 1.1.1
+Description: Inform customers when there is an update to their WooCommerce downloadable product via email.
+Version: 1.1.3
 Author: Uriahs Victor
 Author URI: http://uriahsvictor.com
 License: GPL2
@@ -31,7 +31,7 @@ function tld_wcdpue_load_assets() {
 
 	wp_enqueue_script( 'tld_wcdpue_uilang', plugin_dir_url( __FILE__ ) . 'assets/js/uilang.js' );
 	wp_enqueue_script( 'tld_wcdpue_scripts', plugin_dir_url( __FILE__ ) . 'assets/js/tld-scripts.js?v1.0.0' );
-	wp_enqueue_style( 'tld_wcdpue_styles', plugin_dir_url( __FILE__ ) . 'assets/css/style.css?v1.0.1' );
+	wp_enqueue_style( 'tld_wcdpue_styles', plugin_dir_url( __FILE__ ) . 'assets/css/style.css?v1.0.2' );
 
 }
 add_action( 'admin_enqueue_scripts', 'tld_wcdpue_load_assets' );
@@ -68,10 +68,11 @@ add_filter( 'cron_schedules', 'tld_wcdpue_cron_quarter_hour' );
 function tld_wcdpue_metabox(){
 
 	global $pagenow;
-	if ( $pagenow != 'post-new.php' ){
+	$tld_wcdpue_the_product = wc_get_product( get_the_ID() );
+	if ( $pagenow != 'post-new.php' && $tld_wcdpue_the_product->is_downloadable( 'yes' ) && ! $tld_wcdpue_the_product->is_type('variable') ){
 		add_meta_box(
 		'tld_wcdpue_metabox',
-		'Downloadable Product Email Options',
+		'Email Options',
 		'tld_metabox_fields',
 		'',
 		'side',
@@ -86,17 +87,17 @@ add_action('add_meta_boxes_product', 'tld_wcdpue_metabox', 10, 2);
 function tld_get_product_owners(){
 
 	global $wpdb;
-	$product_id = $_GET['post'];
+	$tld_wcdpue_product_id = get_the_ID();
 	$tld_wcdpue_tbl_prefix = $wpdb->prefix;
-	$tld_wcdpue_the_table = $tld_wcdpue_tbl_prefix . 'woocommerce_downloadable_product_permissions';
+	$tld_wcdpue_dls_table = $tld_wcdpue_tbl_prefix . 'woocommerce_downloadable_product_permissions';
+	// try making above global to use in save posts event
 	$query_result = $wpdb->get_var(
 	"SELECT COUNT(*)
-	FROM $tld_wcdpue_the_table
-	WHERE ( product_id=$product_id )
+	FROM $tld_wcdpue_dls_table
+	WHERE ( product_id = $tld_wcdpue_product_id )
 	AND (access_expires > NOW() OR access_expires IS NULL )
 	");
 	echo $query_result;
-
 
 }
 
@@ -123,19 +124,22 @@ function tld_metabox_fields(){
 			<input type="radio" name="tld-option-selected" value="schedule" checked><span>Schedule</span>
 		</div>
 
-		<?php //switch magic happens below ?>
+		<!-- switch magic happens below -->
 
 		<code style="display: none;">
 			clicking on "#tld-switch" toggles class "active" on "#tld-switch"
 		</code>
 
-		<?php // end magic ?>
+		<!-- end magic -->
 
 	</div>
 
 	<?php
 }
 
+function tld_wcdpue_get_creds(){
+	return 'Sent using WCDPUE: http://bit.ly/wcdpue';
+}
 
 function tld_wcdpue_post_saved( $post_id ) {
 
@@ -146,10 +150,10 @@ function tld_wcdpue_post_saved( $post_id ) {
 
 		global $wpdb;
 		$tld_wcdpue_tbl_prefix = $wpdb->prefix;
-		$tld_wcdpue_the_table = $tld_wcdpue_tbl_prefix . 'woocommerce_downloadable_product_permissions';
+		$tld_wcdpue_dls_table = $tld_wcdpue_tbl_prefix . 'woocommerce_downloadable_product_permissions';
 		$query_result = $wpdb->get_results(
 		"SELECT *
-		FROM $tld_wcdpue_the_table
+		FROM $tld_wcdpue_dls_table
 		WHERE ( product_id = $post_id )
 		AND (access_expires > NOW() OR access_expires IS NULL )
 		"
@@ -173,40 +177,37 @@ function tld_wcdpue_post_saved( $post_id ) {
 		$tld_wcdpue_email_footer = 'Log in to download it from your account now:';
 	}
 
-	$tld_account_url = esc_url ( get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) );
+	$tld_wcdpue_account_url = esc_url ( get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) );
 
-	$tld_option_selected = $_POST['tld-option-selected'];
+	$tld_wcdpue_option_selected = $_POST['tld-option-selected'];
 
-	if ( $tld_option_selected == 'immediately' ){
+	if ( $tld_wcdpue_option_selected == 'immediately' ){
 
-		foreach ( $query_result as $tld_email_address ){
+		foreach ( $query_result as $tld_wcdpue_email_address ){
 
-			$post_title = get_the_title( $post_id );
-			$tld_prod_url = esc_url( get_permalink( $post_id ) );
-			$tld_the_email = $tld_email_address->user_email;
-			$subject = $tld_wcdpue_email_subject;
-			$message = $tld_wcdpue_email_body . "\n\n";
-			$message .= $post_title . ": " . $tld_prod_url . "\n\n" . $tld_wcdpue_email_footer . "\n\n" . $tld_account_url;
-			wp_mail( $tld_the_email, $subject, $message );
+			$tld_wcdpue_post_title = get_the_title( $post_id );
+			$tld_wcdpue_product_url = esc_url( get_permalink( $post_id ) );
+			$tld_wcdpue_buyer_email_address = $tld_wcdpue_email_address->user_email;
+			$tld_wcdpue_email_subject = $tld_wcdpue_email_subject;
+			$tld_wcdpue_email_message = $tld_wcdpue_email_body . "\n\n";
+			$tld_wcdpue_email_message .= $tld_wcdpue_post_title . ": " . $tld_wcdpue_product_url . "\n\n" . $tld_wcdpue_email_footer . "\n\n" . $tld_wcdpue_account_url /*. "\n\n\n" . apply_filters( 'tld_wcdpue_plugin_creds', tld_wcdpue_get_creds() )*/;
+			wp_mail( $tld_wcdpue_buyer_email_address, $tld_wcdpue_email_subject, $tld_wcdpue_email_message );
 
 		}
 
 	}else{
 
-		foreach ( $query_result as $tld_email_address ){
+		foreach ( $query_result as $tld_wcdpue_email_address ){
 
-			$post_title = get_the_title( $post_id );
-			$post_url = esc_url( get_permalink( $post_id ) );
-			$tld_home_url = esc_url( home_url() );
-			$tld_the_email = $tld_email_address->user_email;
-			$tld_the_schedule_table = $tld_wcdpue_tbl_prefix . 'woocommerce_downloadable_product_emails_tld';
+			$tld_wcdpue_buyer_email_address = $tld_wcdpue_email_address->user_email;
+			$tld_wcdpue_the_scheduling_table = $tld_wcdpue_tbl_prefix . 'woocommerce_downloadable_product_emails_tld';
 			$wpdb->insert(
-			$tld_the_schedule_table,
+			$tld_wcdpue_the_scheduling_table ,
 			array(
 
 				'id' => '',
 				'product_id' => $post_id,
-				'user_email' => $tld_the_email,
+				'user_email' => $tld_wcdpue_buyer_email_address,
 
 			)
 		);
@@ -218,7 +219,6 @@ function tld_wcdpue_post_saved( $post_id ) {
 }
 //delete our cookie since we're done with it
 setcookie("tld-wcdpue-cookie", "tld-switch-cookie", time() - 3600);
-
 }
 
 add_action('save_post', 'tld_wcdpue_post_saved');

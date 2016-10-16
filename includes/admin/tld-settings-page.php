@@ -9,16 +9,16 @@ function tld_wcdpue_add_admin_menu() {
 
   //call register settings function
   add_action( 'admin_init', 'tld_wcdpue_settings' );
-  
+
 }
 
 function tld_wcdpue_get_email_body(){
 
-  $email_body = esc_attr( get_option('tld-wcdpue-email-body') );
+  $tld_wcdpue_email_body = esc_attr( get_option( 'tld-wcdpue-email-body' ) );
 
-  if( !empty( $email_body ) ){
+  if( !empty( $tld_wcdpue_email_body ) ){
 
-    echo $email_body;
+    echo $tld_wcdpue_email_body;
 
   }
 
@@ -26,11 +26,11 @@ function tld_wcdpue_get_email_body(){
 
 function tld_wcdpue_get_email_footer(){
 
-  $email_footer = esc_attr( get_option('tld-wcdpue-email-footer') );
+  $tld_wcdpue_email_footer = esc_attr( get_option('tld-wcdpue-email-footer') );
 
-  if( !empty( $email_footer ) ){
+  if( !empty( $tld_wcdpue_email_footer ) ){
 
-    echo $email_footer;
+    echo $tld_wcdpue_email_footer;
 
   }
 
@@ -78,7 +78,7 @@ function tld_wcdpue_settings_page() {
         </tr>
 
         <tr valign="top">
-          <th scope="row">Send e-mails in bursts of <small>(It is recommend you keep this value below 10)</small>:</th>
+          <th scope="row">Send e-mails in bursts of <small>( Keep this value below 5 to ensure deliverability. )</small>:</th>
           <td>
             <input type="number" name="tld-wcdpue-email-bursts-count" value="<?php echo esc_attr( get_option('tld-wcdpue-email-bursts-count') ); ?>" min="1" size="4"/>
           </td>
@@ -90,11 +90,11 @@ function tld_wcdpue_settings_page() {
             <select name="tld-wcdpue-schedule-setting-value">
               <?php
 
-              $active_cron_schedules = wp_get_schedules();
+              $tld_wcdpue_active_cron_schedules = wp_get_schedules();
 
               $tld_wcdpue_current_schedule = esc_attr( get_option( 'tld-wcdpue-schedule-setting-value' ) );
 
-              foreach ( $active_cron_schedules as $key => $value ) {
+              foreach ( $tld_wcdpue_active_cron_schedules as $key => $value ) {
 
                 if ( empty( $tld_wcdpue_current_schedule ) && $key == "daily" ){
                   echo '<option value="' . $key . '" selected>' . $value['display'] . '</option>';
@@ -117,12 +117,12 @@ function tld_wcdpue_settings_page() {
         <tr valign="top">
           <th>Delete all plugin settings on uninstall?</th>
           <?php
-          $checked = get_option( 'tld-wcdpue-delete-db-settings' );
-          if ( !empty( $checked ) ){
-            $checked = "checked";
+          $tld_wcdpue_checked = get_option( 'tld-wcdpue-delete-db-settings' );
+          if ( !empty( $tld_wcdpue_checked ) ){
+            $tld_wcdpue_checked = "checked";
           }
           ?>
-          <td><input type="checkbox" name="tld-wcdpue-delete-db-settings" <?php echo $checked ?>></td>
+          <td><input type="checkbox" name="tld-wcdpue-delete-db-settings" <?php echo $tld_wcdpue_checked ?>></td>
         </tr>
       </table>
 
@@ -176,9 +176,9 @@ function tld_wcdpue_settings() {
 function tld_wcdpue_update_schedule() {
 
   $tld_wcdpue_cur_recurrence = get_option( 'tld-wcdpue-schedule-setting-value' ); //get interval set by user
-  $active_cron_schedules = wp_get_schedules();
+  $tld_wcdpue_active_cron_schedules = wp_get_schedules();
 
-  foreach ( $active_cron_schedules as $key => $value ) {
+  foreach ( $tld_wcdpue_active_cron_schedules as $key => $value ) {
 
     if ( $key == $tld_wcdpue_cur_recurrence ){
 

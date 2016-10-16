@@ -12,12 +12,14 @@ if ( $tld_wcdpue_byebye == 'on' ){
   delete_option('tld-wcdpue-email-subject');
   delete_option('tld-wcdpue-email-bursts-count');
   delete_option('tld-wcdpue-email-body');
+  delete_option('tld-wcdpue-email-footer');
+  delete_option('tld_default_cron');
   delete_option('tld-wcdpue-delete-db-settings');
   delete_option('tld_table_version');
 
   global $wpdb;
-  $tld_tbl_name = $wpdb->prefix."woocommerce_downloadable_product_emails_tld";
-  $wpdb->query("DROP TABLE IF EXISTS $tld_tbl_name");
+  $tld_wcdpue_tbl = $wpdb->prefix."woocommerce_downloadable_product_emails_tld";
+  $wpdb->query("DROP TABLE IF EXISTS $tld_wcdpue_tbl");
 
 }
 
