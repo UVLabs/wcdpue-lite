@@ -3,7 +3,7 @@
 Plugin Name: TLD WooCommerce Downloadable Product Update Emails
 Plugin URI: http://uriahsvictor.com
 Description: Inform customers when there is an update to their WooCommerce downloadable product via email.
-Version: 1.1.2
+Version: 1.1.3
 Author: Uriahs Victor
 Author URI: http://uriahsvictor.com
 License: GPL2
