@@ -7,13 +7,16 @@ Author URI:        http://uriahsvictor.com
 Author:            Uriahs Victor
 Requires at least: 4.1
 Tested up to:      4.6.1
-Stable tag:        1.1.3
-Version:           1.1.3
+Stable tag:        1.1.4
+Version:           1.1.4
 License:           GPLv2 of later
 
 == Description ==
 
-A simple plugin used to send emails to customers who bought a downloadable product, letting them know that there's been an update to their download. Never let customers guess if an edition of the e-book they bought has been updated. No more need to manually email customers about downloadable product updates or creating a new product.
+This plugin can be used to send emails to customers who bought a downloadable product, letting them know that there's been an update to their download. Never let customers guess if an edition of the e-book they bought has been updated. No more need to manually email customers about downloadable product updates or creating a new product.
+
+Check out the Pro Version! http://bit.ly/wcdpue-pro
+
 
 == Installation ==
 
@@ -33,6 +36,12 @@ A simple plugin used to send emails to customers who bought a downloadable produ
 5. Customable email body, more customization soon.
 
 == Changelog ==
+
+**1.1.4**
+
+* Pro version now available.
+* Plugin name change.
+* Other minor changes.
 
 **1.1.3**
 

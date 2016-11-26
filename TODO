@@ -40,3 +40,7 @@
 --ongoing
 
 -Check value option names
+
+-Add option to send all schedule emails
+
+-Show how many scheduled emails in queue
