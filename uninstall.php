@@ -8,6 +8,8 @@ $tld_wcdpue_byebye = get_option('tld-wcdpue-delete-db-settings');
 
 if ( $tld_wcdpue_byebye == 'on' ){
 
+  delete_usermeta( $user_id, 'tld_wcdpue_review_dismiss' );
+
   delete_option('tld-wcdpue-schedule-setting-value');
   delete_option('tld-wcdpue-email-subject');
   delete_option('tld-wcdpue-email-bursts-count');
@@ -15,6 +17,7 @@ if ( $tld_wcdpue_byebye == 'on' ){
   delete_option('tld-wcdpue-email-footer');
   delete_option('tld_default_cron');
   delete_option('tld-wcdpue-delete-db-settings');
+  delete_option( 'tld_wcdpue_activation_date' );
   delete_option('tld_table_version');
 
   global $wpdb;

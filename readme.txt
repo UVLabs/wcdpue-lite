@@ -1,19 +1,26 @@
 === Plugin Name ===
 Contributors: uriahs-victor
-Plugin Name:       TLD WooCommerce Downloadable Product Update Emails
+Plugin Name:       WooCommerce Downloadable Product Update Emails
 Plugin URI:        https://github.com/UVLabs/WooCommerce-Downloadable-Product-Update-Emails
 Tags:              woocommerce, emails, downloadable, products, update, schedule, ecommerce, e-commerce, customers, ebook, email customers, software, music, videos, notify customers
 Author URI:        http://uriahsvictor.com
 Author:            Uriahs Victor
 Requires at least: 4.1
-Tested up to:      4.6.1
-Stable tag:        1.1.3
-Version:           1.1.3
+Tested up to:      4.7
+Stable tag:        1.1.5
+Version:           1.1.5
 License:           GPLv2 of later
 
 == Description ==
 
-A simple plugin used to send emails to customers who bought a downloadable product, letting them know that there's been an update to their download. Never let customers guess if an edition of the e-book they bought has been updated. No more need to manually email customers about downloadable product updates or creating a new product.
+WooCommerce Downloadable Product Update Emails. This plugin can be used to send emails to customers who bought a WooCommerce downloadable product, letting them know that there's been an update to their download. Never let customers guess if an edition of the e-book they bought or other product they bought has been updated. No more need to manually email customers about downloadable product updates or creating a new product.
+
+
+= Pro Version =
+
+Take a look at the Pro version for more functionality including HTML Emails, Variable Product Support and more!
+
+[Go to Pro plugin page.](https://codecanyon.net/item/woocommerce-downloadable-product-update-emails/18908283?ref=TheLoneDev)
 
 == Installation ==
 
@@ -33,6 +40,19 @@ A simple plugin used to send emails to customers who bought a downloadable produ
 5. Customable email body, more customization soon.
 
 == Changelog ==
+
+**1.1.5**
+
+* Output admin notice if WooCommerce not active.
+* Metabox text changes
+* Tested WP 4.7
+* Other minor changes
+
+**1.1.4**
+
+* Pro version now available.
+* Plugin name change.
+* Other minor changes.
 
 **1.1.3**
 
@@ -74,7 +94,7 @@ I used wp_mail in the plugin so you could easily override the default send from 
 
 = HTML Email Templates? =
 
-Will be available in Pro version of plugin.
+Available in Pro version of plugin.
 
 = What are Email Bursts? =
 

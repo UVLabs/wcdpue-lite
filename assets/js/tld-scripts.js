@@ -46,11 +46,14 @@ function tld_cookie_business() {
   if (tldCookie == null) {
 
     document.cookie = "tld-wcdpue-cookie = tld-switch-cookie"
-    //console.log('cookie created')
+    document.getElementById( "meta-switch-label" ).style.cssText="color: #228B22; font-weight: bold; ";
+    document.getElementById( "meta-switch-label" ).innerHTML = "Activated"
 
   } else {
 
     document.cookie = "tld-wcdpue-cookie = tld-switch-cookie; expires=Thu, 01 Jan 1970 00:00:00 UTC"
-
+    document.getElementById( "meta-switch-label" ).style.cssText="color: inherit; font-weight: normal; ";
+    document.getElementById( "meta-switch-label" ).innerHTML = "Deactivated"
+    
   }
 }

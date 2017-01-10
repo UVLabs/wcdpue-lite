@@ -21,12 +21,29 @@
 
 -Give user a visual representation that emails were actually sent.
 --This wont work on save_post action because it redirects right after. Need to show message after page refresh.
+---Pro feature
 
 -Only show metabox if product is downloadable
 --Fixed (as of v1.1.2)
 
 -Go to schedule mail set up and if no active cron schedule set then after setting the default to daily, update the option so the settings page could get the correct value
 --Fixed (as of v1.1.2)
+
+-Show how many scheduled emails in queue
+--Fixed (as of v1.1.5)
+
+-Add styling for activated deactivated
+--Fixed (as of v1.1.5)
+
+-Edit read me FAQ to say HTML emails already in Pro version
+--Fixed (as of v1.1.5)
+
+-Add WooCommerce active check just like in pro versionn
+--Fixed (as of v1.1.5)
+
+-Add easy review heartbeat same as in Pro version.
+--Fixed (as of v1.1.5)
+
 
 -In query when checking for emails to add to the custom table, also check for download remaining not = 0
 
@@ -40,3 +57,7 @@
 --ongoing
 
 -Check value option names
+
+-Add option to send all schedule emails
+
+-Test what happens if both pro and lite plugin activated.
