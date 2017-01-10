@@ -5,7 +5,7 @@ add_action('admin_menu', 'tld_wcdpue_add_admin_menu');
 function tld_wcdpue_add_admin_menu() {
 
   //create new settings menu item
-  add_options_page('Product Update Emails', 'Product Update Emails', 'administrator', 'tld_product_update_emails', 'tld_wcdpue_settings_page' );
+  add_options_page('WooCommerce Downloadable Product Update Emails', 'WCDPUE Lite', 'administrator', 'wcdpue-lite', 'tld_wcdpue_settings_page' );
 
   //call register settings function
   add_action( 'admin_init', 'tld_wcdpue_settings' );
@@ -157,7 +157,7 @@ function tld_wcdpue_get_queue(){
             <p>If this plugin genuinely helped you with managing your store then maybe you might like to donate?</p>
             <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
               <input type="hidden" name="cmd" value="_donations">
-              <input type="hidden" name="business" value="donation@tutbakery.com">
+              <input type="hidden" name="business" value="me@uriahsvictor.com">
               <input type="hidden" name="lc" value="LC">
               <input type="hidden" name="item_name" value="Support further development with your kind donation.">
               <input type="hidden" name="item_number" value="WC Product Update Emails Plugin">

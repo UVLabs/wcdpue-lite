@@ -3,7 +3,7 @@
 Plugin Name: WCDPUE Lite
 Plugin URI: http://uriahsvictor.com
 Description: Inform customers when there is an update to their WooCommerce downloadable product via email.
-Version: 1.1.4
+Version: 1.1.5
 Author: Uriahs Victor
 Author URI: http://uriahsvictor.com
 License: GPL2
@@ -20,6 +20,9 @@ include dirname( __FILE__ ) . '/includes/tld-schedule-mail.php';
 //options page setup
 include dirname( __FILE__ ) . '/includes/admin/tld-settings-page.php';
 
+//admin review notice
+include( dirname( __FILE__ ) . '/includes/admin/tld-notice.php' );
+
 //activation/deactivation tasks
 register_activation_hook( __FILE__, 'tld_wcdpue_setup_table' );
 register_activation_hook( __FILE__, 'tld_wcdpue_activate_schedule' );
@@ -30,12 +33,76 @@ register_deactivation_hook( __FILE__, 'tld_wcdpue_deactivate_schedule');
 function tld_wcdpue_load_assets() {
 
   wp_enqueue_script( 'tld_wcdpue_uilang', plugin_dir_url( __FILE__ ) . 'assets/js/uilang.js' );
-  wp_enqueue_script( 'tld_wcdpue_scripts', plugin_dir_url( __FILE__ ) . 'assets/js/tld-scripts.js?v1.0.0' );
+  wp_enqueue_script( 'tld_wcdpue_scripts', plugin_dir_url( __FILE__ ) . 'assets/js/tld-scripts.js?v1.0.1' );
   wp_enqueue_style( 'tld_wcdpue_styles', plugin_dir_url( __FILE__ ) . 'assets/css/style.css?v1.0.3' );
 
 }
 add_action( 'admin_enqueue_scripts', 'tld_wcdpue_load_assets' );
 
+// check if WooCommerce is activated
+function tld_wcdpue_wc_check(){
+
+	if ( class_exists( 'woocommerce' ) ) {
+
+		global $tld_wcdpue_wc_active;
+		$tld_wcdpue_wc_active = 'yes';
+
+	} else {
+
+		global  $tld_wcdpue_wc_active;
+		$tld_wcdpue_wc_active = 'no';
+
+	}
+
+}
+add_action( 'admin_init', 'tld_wcdpue_wc_check' );
+
+// show admin notice if WooCommerce is not activated
+function tld_wcdpue_wc_active(){
+
+	global  $tld_wcdpue_wc_active;
+
+	if ( $tld_wcdpue_wc_active == 'no' ){
+		?>
+
+		<div class="notice notice-error is-dismissible">
+			<p>WooCommerce is not activated, please activate it to use <b>WCDPUE Lite.</b></p>
+		</div>
+		<?php
+
+	}
+
+}
+add_action('admin_notices', 'tld_wcdpue_wc_active');
+
+//setup review timer
+if ( function_exists( 'tld_wcdpue_review_notice' ) ) {
+
+	register_activation_hook( __FILE__,  'tld_wcdpue_set_review_trigger_date' );
+
+	/**
+	* Set Trigger Date.
+	*
+	* @since  1.0.0
+	*/
+	function tld_wcdpue_set_review_trigger_date() {
+
+		// Number of days you want the notice delayed by.
+		$tld_wcdpue_delayindays = 30;
+
+		// Create timestamp for when plugin was activated.
+		$tld_wcdpue_triggerdate = mktime( 0, 0, 0, date('m')  , date('d') + $tld_wcdpue_delayindays, date('Y') );
+
+		// If our option doesn't exist already, we'll create it with today's timestamp.
+		if ( ! get_option( 'tld_wcdpue_activation_date') ) {
+			add_option( 'tld_wcdpue_activation_date', $tld_wcdpue_triggerdate, '', 'yes' );
+		}
+
+	}
+
+}
+
+// delete cron job on deactivation
 function tld_wcdpue_deactivate_schedule() {
 
   if ( ! current_user_can( 'activate_plugins' ) ) {
@@ -56,8 +123,8 @@ function tld_wcdpue_cron_quarter_hour($schedules){
 
   $schedules['tld_quick_cron'] = array(
 
-    'interval' => 900,
-    'display' => __( 'Every 15 Minutes' )
+    'interval' => 60,
+    'display' => __( 'Every 1 Minute' )
 
   );
   return $schedules;
@@ -112,7 +179,7 @@ function tld_get_product_owners(){
 
       if( $tld_wcdpue_product->is_type( 'variable' ) ){
 
-      echo '<div id="tld-wcdpue-upgrade"><strong><a href="http://uriahsvictor.com/go/wcdpue-upgrade/" target="_blank">Upgrade to Pro</a> for variable downloadable product support!</strong></div></div>';
+      echo '<div id="tld-wcdpue-upgrade"><strong><a href="https://codecanyon.net/item/woocommerce-downloadable-product-update-emails/18908283?ref=TheLoneDev" target="_blank">Upgrade to Pro</a> for variable downloadable product support!</strong></div></div>';
 
       }else{
         ?>
@@ -121,7 +188,7 @@ function tld_get_product_owners(){
         </div>
 
         <div>
-          <label for="tld-option-selected" id="meta-switch-label">Send product update email?</label>
+          <label for="tld-option-selected" id="meta-switch-label">Deactivated</label>
         </div>
 
         <div id='tld-switch' onclick="tld_cookie_business()">
@@ -133,7 +200,7 @@ function tld_get_product_owners(){
           <input type="radio" name="tld-option-selected" value="schedule" checked><span>Schedule</span>
         </div>
 
-        <div id="tld-wcdpue-upgrade"><strong><a href="http://uriahsvictor.com/go/wcdpue-upgrade/" target="_blank">Upgrade to Pro</a></strong></div>
+        <div id="tld-wcdpue-upgrade"><strong><a href="https://codecanyon.net/item/woocommerce-downloadable-product-update-emails/18908283?ref=TheLoneDev" target="_blank">Upgrade to Pro</a></strong></div>
         <!-- switch magic happens below -->
 
         <code style="display: none;">
