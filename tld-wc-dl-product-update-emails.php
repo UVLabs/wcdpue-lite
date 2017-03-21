@@ -3,7 +3,7 @@
 Plugin Name: WCDPUE Lite
 Plugin URI: http://uriahsvictor.com
 Description: Inform customers when there is an update to their WooCommerce downloadable product via email.
-Version: 1.1.5
+Version: 1.1.6
 Author: Uriahs Victor
 Author URI: http://uriahsvictor.com
 License: GPL2
@@ -34,7 +34,7 @@ function tld_wcdpue_load_assets() {
 
   wp_enqueue_script( 'tld_wcdpue_uilang', plugin_dir_url( __FILE__ ) . 'assets/js/uilang.js' );
   wp_enqueue_script( 'tld_wcdpue_scripts', plugin_dir_url( __FILE__ ) . 'assets/js/tld-scripts.js?v1.0.1' );
-  wp_enqueue_style( 'tld_wcdpue_styles', plugin_dir_url( __FILE__ ) . 'assets/css/style.css?v1.0.3' );
+  wp_enqueue_style( 'tld_wcdpue_styles', plugin_dir_url( __FILE__ ) . 'assets/css/style.css?v1.1.6' );
 
 }
 add_action( 'admin_enqueue_scripts', 'tld_wcdpue_load_assets' );
@@ -158,13 +158,13 @@ function tld_get_product_owners(){
   $tld_wcdpue_tbl_prefix = $wpdb->prefix;
   $tld_wcdpue_dls_table = $tld_wcdpue_tbl_prefix . 'woocommerce_downloadable_product_permissions';
   // try making above global to use in save posts event
-  $query_result = $wpdb->get_var(
-    "SELECT COUNT(*)
+  $tld_wcdpue_query_result = $wpdb->get_var(
+    "SELECT COUNT( DISTINCT product_id, order_id, order_key, user_email )
     FROM $tld_wcdpue_dls_table
     WHERE ( product_id = $tld_wcdpue_product_id )
     AND (access_expires > NOW() OR access_expires IS NULL )
     ");
-    echo $query_result;
+    echo $tld_wcdpue_query_result;
 
   }
 
@@ -226,8 +226,8 @@ function tld_get_product_owners(){
       global $wpdb;
       $tld_wcdpue_tbl_prefix = $wpdb->prefix;
       $tld_wcdpue_dls_table = $tld_wcdpue_tbl_prefix . 'woocommerce_downloadable_product_permissions';
-      $query_result = $wpdb->get_results(
-        "SELECT *
+      $tld_wcdpue_query_result = $wpdb->get_results(
+        "SELECT DISTINCT product_id, order_id, order_key, user_email
         FROM $tld_wcdpue_dls_table
         WHERE ( product_id = $post_id )
         AND (access_expires > NOW() OR access_expires IS NULL )
@@ -258,7 +258,7 @@ function tld_get_product_owners(){
 
       if ( $tld_wcdpue_option_selected == 'immediately' ){
 
-        foreach ( $query_result as $tld_wcdpue_email_address ){
+        foreach ( $tld_wcdpue_query_result as $tld_wcdpue_email_address ){
 
           $tld_wcdpue_post_title = get_the_title( $post_id );
           $tld_wcdpue_product_url = esc_url( get_permalink( $post_id ) );
@@ -272,7 +272,7 @@ function tld_get_product_owners(){
 
       }else{
 
-        foreach ( $query_result as $tld_wcdpue_email_address ){
+        foreach ( $tld_wcdpue_query_result as $tld_wcdpue_email_address ){
 
           $tld_wcdpue_buyer_email_address = $tld_wcdpue_email_address->user_email;
           $tld_wcdpue_the_scheduling_table = $tld_wcdpue_tbl_prefix . 'woocommerce_downloadable_product_emails_tld';

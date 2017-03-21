@@ -48,6 +48,15 @@ div#tld_wcdpue_metabox h2{
   margin-top: 10px;
 }
 
+#tld-wcdpue-upgrade a{
+  background: #0000ff;
+  padding: 5px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 3px;
+}
+
 .tld-wcdpue-center-text{ text-align: center; }
 
 .tld-wcdpue-top-margin{ margin-top: 10px; }

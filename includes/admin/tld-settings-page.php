@@ -83,6 +83,7 @@ function tld_wcdpue_get_queue(){
             <tr valign="top">
               <th scope="row">E-mail Footer</th>
               <td>
+                <span style="font-weight: bold; color: red; margin-bottom: 10px; font-size: 12px">THIS FOOTER OPTION WILL BE REMOVED IN THE NEXT VERSION, IT IS REDUNDANT. USE THE EMAIL BODY TEXT AREA TO CREATE YOUR EMAIL.</span>
                 <textarea name="tld-wcdpue-email-footer" placeholder="Log in to download it from your account now" rows="8" cols="70"/><?php tld_wcdpue_get_email_footer(); ?></textarea>
               </td>
             </tr>
