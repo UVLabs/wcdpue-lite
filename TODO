@@ -38,14 +38,17 @@
 -Edit read me FAQ to say HTML emails already in Pro version
 --Fixed (as of v1.1.5)
 
--Add WooCommerce active check just like in pro versionn
+-Add WooCommerce active check just like in pro version
 --Fixed (as of v1.1.5)
 
 -Add easy review heartbeat same as in Pro version.
 --Fixed (as of v1.1.5)
 
 
--In query when checking for emails to add to the custom table, also check for download remaining not = 0
+-Add tags for EDD
+--Fixed (as of v1.1.6)
+
+-In query when checking for emails to add to the custom table, also check for download remaining not === 0
 
 -Show number of scheduled mail in queue on settings page.
 
@@ -61,3 +64,5 @@
 -Add option to send all schedule emails
 
 -Test what happens if both pro and lite plugin activated.
+
+-Add screenshots of Pro version

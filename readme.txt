@@ -2,13 +2,13 @@
 Contributors: uriahs-victor
 Plugin Name:       WooCommerce Downloadable Product Update Emails
 Plugin URI:        https://github.com/UVLabs/WooCommerce-Downloadable-Product-Update-Emails
-Tags:              woocommerce, emails, downloadable, products, update, schedule, ecommerce, e-commerce, customers, ebook, email customers, software, music, videos, notify customers
+Tags:              woocommerce, emails, downloadable, products, update, schedule, ecommerce, e-commerce, customers, ebook update, email customers, software update, music, videos, notify customers, edd, digital downloads, product notify
 Author URI:        http://uriahsvictor.com
 Author:            Uriahs Victor
 Requires at least: 4.1
 Tested up to:      4.7
-Stable tag:        1.1.5
-Version:           1.1.5
+Stable tag:        1.1.6
+Version:           1.1.6
 License:           GPLv2 of later
 
 == Description ==
@@ -40,6 +40,11 @@ Take a look at the Pro version for more functionality including HTML Emails, Var
 5. Customable email body, more customization soon.
 
 == Changelog ==
+
+**1.1.6**
+
+* Fixed an issue where the plugin would incorrectly count the amount of buyers with access to the download.
+
 
 **1.1.5**
 
