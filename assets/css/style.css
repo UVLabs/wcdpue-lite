@@ -45,11 +45,11 @@ div#tld_wcdpue_metabox h2{
 }
 
 #tld-wcdpue-upgrade{
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 #tld-wcdpue-upgrade a{
-  background: #0000ff;
+  background: #4bb34b;
   padding: 5px;
   color: #fff;
   text-decoration: none;
@@ -58,8 +58,6 @@ div#tld_wcdpue_metabox h2{
 }
 
 .tld-wcdpue-center-text{ text-align: center; }
-
-.tld-wcdpue-top-margin{ margin-top: 10px; }
 
 /*=== Donation ===*/
 

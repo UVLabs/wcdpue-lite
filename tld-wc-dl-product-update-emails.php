@@ -3,7 +3,7 @@
 Plugin Name: WCDPUE Lite
 Plugin URI: http://uriahsvictor.com
 Description: Inform customers when there is an update to their WooCommerce downloadable product via email.
-Version: 1.1.6
+Version: 1.1.7
 Author: Uriahs Victor
 Author URI: http://uriahsvictor.com
 License: GPL2
@@ -34,7 +34,7 @@ function tld_wcdpue_load_assets() {
 
   wp_enqueue_script( 'tld_wcdpue_uilang', plugin_dir_url( __FILE__ ) . 'assets/js/uilang.js' );
   wp_enqueue_script( 'tld_wcdpue_scripts', plugin_dir_url( __FILE__ ) . 'assets/js/tld-scripts.js?v1.0.1' );
-  wp_enqueue_style( 'tld_wcdpue_styles', plugin_dir_url( __FILE__ ) . 'assets/css/style.css?v1.1.6' );
+  wp_enqueue_style( 'tld_wcdpue_styles', plugin_dir_url( __FILE__ ) . 'assets/css/style.css?v1.1.8' );
 
 }
 add_action( 'admin_enqueue_scripts', 'tld_wcdpue_load_assets' );
@@ -184,7 +184,7 @@ function tld_get_product_owners(){
       }else{
         ?>
         <div>
-          <p>Buyers with download access: <?php tld_get_product_owners(); ?></p>
+          <p>Unique download access count: <?php tld_get_product_owners(); ?></p>
         </div>
 
         <div>
@@ -193,11 +193,6 @@ function tld_get_product_owners(){
 
         <div id='tld-switch' onclick="tld_cookie_business()">
           <div id='circle'></div>
-        </div>
-
-        <div class="tld-wcdpue-top-margin">
-          <input type="radio" name="tld-option-selected" value="immediately"><span style="margin-right: 10px;">Immediately</span>
-          <input type="radio" name="tld-option-selected" value="schedule" checked><span>Schedule</span>
         </div>
 
         <div id="tld-wcdpue-upgrade"><strong><a href="https://codecanyon.net/item/woocommerce-downloadable-product-update-emails/18908283?ref=TheLoneDev" target="_blank">Upgrade to Pro</a></strong></div>
@@ -238,7 +233,6 @@ function tld_get_product_owners(){
 
       $tld_wcdpue_email_subject = esc_attr( get_option( 'tld-wcdpue-email-subject' ) );
       $tld_wcdpue_email_body = esc_attr( get_option( 'tld-wcdpue-email-body' ) );
-      $tld_wcdpue_email_footer = esc_attr( get_option( 'tld-wcdpue-email-footer' ) );
 
       if ( empty( $tld_wcdpue_email_subject ) ){
         $tld_wcdpue_email_subject = 'A product you bought has been updated!';
@@ -248,29 +242,8 @@ function tld_get_product_owners(){
         $tld_wcdpue_email_body = 'There is a new update for your product:';
       }
 
-      if ( empty( $tld_wcdpue_email_footer ) ){
-        $tld_wcdpue_email_footer = 'Log in to download it from your account now:';
-      }
 
       $tld_wcdpue_account_url = esc_url ( get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) );
-
-      $tld_wcdpue_option_selected = $_POST['tld-option-selected'];
-
-      if ( $tld_wcdpue_option_selected == 'immediately' ){
-
-        foreach ( $tld_wcdpue_query_result as $tld_wcdpue_email_address ){
-
-          $tld_wcdpue_post_title = get_the_title( $post_id );
-          $tld_wcdpue_product_url = esc_url( get_permalink( $post_id ) );
-          $tld_wcdpue_buyer_email_address = $tld_wcdpue_email_address->user_email;
-          $tld_wcdpue_email_subject = $tld_wcdpue_email_subject;
-          $tld_wcdpue_email_message = $tld_wcdpue_email_body . "\n\n";
-          $tld_wcdpue_email_message .= $tld_wcdpue_post_title . ": " . $tld_wcdpue_product_url . "\n\n" . $tld_wcdpue_email_footer . "\n\n" . $tld_wcdpue_account_url;
-          wp_mail( $tld_wcdpue_buyer_email_address, $tld_wcdpue_email_subject, $tld_wcdpue_email_message );
-
-        }
-
-      }else{
 
         foreach ( $tld_wcdpue_query_result as $tld_wcdpue_email_address ){
 
@@ -288,8 +261,6 @@ function tld_get_product_owners(){
           );
 
         }
-
-      }
 
     }
     //delete our cookie since we're done with it
