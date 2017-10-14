@@ -109,6 +109,11 @@ function tld_wcdpue_get_queue(){
               <td><?php tld_wcdpue_get_queue(); ?></td>
             </tr>
             <tr valign="top">
+              <td><form>
+              <button type="submit" formmethod="post" formaction="<?php echo plugins_url( 'tld-clear-queue.php', __FILE__ ); ?>" class="button button-primary">Clear Queue</button></form></td>
+            </tr>
+
+            <tr valign="top">
               <th><h3>Housekeeping</h3></th>
             </tr>
 
@@ -131,63 +136,63 @@ function tld_wcdpue_get_queue(){
 
       <!-- <div id="tld-donation-wrap">
 
-        <div id="tld-donation-container">
-          <h1 id="tld-donation-header">Did my plugin help?</h1>
-          <div id="tld-donation-body">
+      <div id="tld-donation-container">
+      <h1 id="tld-donation-header">Did my plugin help?</h1>
+      <div id="tld-donation-body">
 
-            <p>If this plugin genuinely helped you with managing your store then maybe you might like to donate?</p>
-            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-              <input type="hidden" name="cmd" value="_donations">
-              <input type="hidden" name="business" value="me@uriahsvictor.com">
-              <input type="hidden" name="lc" value="LC">
-              <input type="hidden" name="item_name" value="Support further development with your kind donation.">
-              <input type="hidden" name="item_number" value="WC Product Update Emails Plugin">
-              <input type="hidden" name="no_note" value="0">
-              <input type="hidden" name="currency_code" value="USD">
-              <input type="hidden" name="bn" value="PP-DonationsBF:btn_donateCC_LG.gif:NonHostedGuest">
-              <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-              <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-            </form>
+      <p>If this plugin genuinely helped you with managing your store then maybe you might like to donate?</p>
+      <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+      <input type="hidden" name="cmd" value="_donations">
+      <input type="hidden" name="business" value="me@uriahsvictor.com">
+      <input type="hidden" name="lc" value="LC">
+      <input type="hidden" name="item_name" value="Support further development with your kind donation.">
+      <input type="hidden" name="item_number" value="WC Product Update Emails Plugin">
+      <input type="hidden" name="no_note" value="0">
+      <input type="hidden" name="currency_code" value="USD">
+      <input type="hidden" name="bn" value="PP-DonationsBF:btn_donateCC_LG.gif:NonHostedGuest">
+      <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+      <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+    </form>
 
-          </div>
+  </div>
 
-        </div>
+</div>
 
-      </div>-->
-    </div>
+</div>-->
+</div>
 
 
-    <?php }
+<?php }
 
-    function tld_wcdpue_settings() {
+function tld_wcdpue_settings() {
 
-      //register our settings
-      register_setting( 'tld-wcdpue-settings-group', 'tld-wcdpue-email-subject' );
-      register_setting( 'tld-wcdpue-settings-group', 'tld-wcdpue-email-body' );
-      register_setting( 'tld-wcdpue-settings-group', 'tld-wcdpue-email-bursts-count' );
-      register_setting( 'tld-wcdpue-settings-group', 'tld-wcdpue-schedule-setting-value' );
-      register_setting( 'tld-wcdpue-settings-group', 'tld-wcdpue-delete-db-settings' );
+  //register our settings
+  register_setting( 'tld-wcdpue-settings-group', 'tld-wcdpue-email-subject' );
+  register_setting( 'tld-wcdpue-settings-group', 'tld-wcdpue-email-body' );
+  register_setting( 'tld-wcdpue-settings-group', 'tld-wcdpue-email-bursts-count' );
+  register_setting( 'tld-wcdpue-settings-group', 'tld-wcdpue-schedule-setting-value' );
+  register_setting( 'tld-wcdpue-settings-group', 'tld-wcdpue-delete-db-settings' );
 
-    }
+}
 
-    function tld_wcdpue_update_schedule() {
+function tld_wcdpue_update_schedule() {
 
-      $tld_wcdpue_cur_recurrence = get_option( 'tld-wcdpue-schedule-setting-value' ); //get interval set by user
-      $tld_wcdpue_active_cron_schedules = wp_get_schedules();
+  $tld_wcdpue_cur_recurrence = get_option( 'tld-wcdpue-schedule-setting-value' ); //get interval set by user
+  $tld_wcdpue_active_cron_schedules = wp_get_schedules();
 
-      foreach ( $tld_wcdpue_active_cron_schedules as $key => $value ) {
+  foreach ( $tld_wcdpue_active_cron_schedules as $key => $value ) {
 
-        if ( $key == $tld_wcdpue_cur_recurrence ){
+    if ( $key == $tld_wcdpue_cur_recurrence ){
 
-          $tld_wcdpue_wait_time = $value['interval'];
-
-        }
-
-      }
-      wp_clear_scheduled_hook('tld_wcdpue_email_burst'); //remove previous scheduled time
-      wp_schedule_event( time() + $tld_wcdpue_wait_time , $tld_wcdpue_cur_recurrence, 'tld_wcdpue_email_burst' ); //add new scheduled time
+      $tld_wcdpue_wait_time = $value['interval'];
 
     }
-    add_action( 'update_option_tld-wcdpue-schedule-setting-value', 'tld_wcdpue_update_schedule');
 
-    ?>
+  }
+  wp_clear_scheduled_hook('tld_wcdpue_email_burst'); //remove previous scheduled time
+  wp_schedule_event( time() + $tld_wcdpue_wait_time , $tld_wcdpue_cur_recurrence, 'tld_wcdpue_email_burst' ); //add new scheduled time
+
+}
+add_action( 'update_option_tld-wcdpue-schedule-setting-value', 'tld_wcdpue_update_schedule');
+
+?>

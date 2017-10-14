@@ -33,8 +33,8 @@ function tld_wcdpue_send_schedule_mail(){
 
   //get our options
 
-  $tld_wcdpue_email_subject = esc_attr( get_option( 'tld-wcdpue-email-subject' ) );
-  $tld_wcdpue_email_body = esc_attr( get_option( 'tld-wcdpue-email-body' ) );
+  $tld_wcdpue_email_subject = strip_tags( get_option( 'tld-wcdpue-email-subject' ) );
+  $tld_wcdpue_email_body = strip_tags( get_option( 'tld-wcdpue-email-body' ) );
   $tld_wcdpue_email_bursts_count = esc_attr( get_option( 'tld-wcdpue-email-bursts-count' ) );
 
   if ( empty( $tld_wcdpue_email_subject ) ){
@@ -64,7 +64,7 @@ function tld_wcdpue_send_schedule_mail(){
     $tld_wcdpue_home_url = esc_url( home_url() );
     $tld_wcdpue_buyer_email_address = $result->user_email;
     $tld_wcdpue_email_message = $tld_wcdpue_email_body . "\n\n";
-    $tld_wcdpue_email_message .= $tld_wcdpue_post_title . ": " . $tld_wcdpue_product_url . "\n\n" . $tld_wcdpue_account_url;
+    $tld_wcdpue_email_message .= "\n\n" . $tld_wcdpue_post_title . ": " . "\n\n" . $tld_wcdpue_product_url . "\n\n" . "\n\n".  $tld_wcdpue_account_url;
     wp_mail( $tld_wcdpue_buyer_email_address, $tld_wcdpue_email_subject, $tld_wcdpue_email_message );
     $wpdb->delete( $tld_wcdpue_the_scheduling_table, array( 'id' => $result->id ) );   //delete the current row in loop after mail sent
     sleep(2); //short breath, no rush.

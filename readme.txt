@@ -13,7 +13,7 @@ License:           GPLv2 of later
 
 == Description ==
 
-WooCommerce Downloadable Product Update Emails. This plugin can be used to send emails to customers who bought a WooCommerce downloadable product, letting them know that there's been an update to their download. Never let customers guess if an edition of the e-book they bought or other product they bought has been updated. No more need to manually email customers about downloadable product updates or creating a new product.
+WooCommerce Downloadable Product Update Emails. This plugin can be used to send emails to customers who bought a WooCommerce downloadable product; letting them know that there's been an update to their download. Never let customers guess if an edition of the e-book they bought or other product they bought has been updated. No more need to manually email customers about downloadable product updates or creating a new product.
 
 
 = Pro Version =
@@ -44,6 +44,7 @@ Take a look at the Pro version for more functionality including HTML Emails, Var
 **1.1.7**
 
 * Removed redundant field on setting page
+* Added clear queue button on settings page
 * Removed immediately send option
 * Plugin now shows how many emails were scheduled
 * Plugin will not send the same email to an address even though they ordered the same product multiple times; customer will only get one email for that product.
@@ -119,4 +120,4 @@ In theory there should be no problem with this. But if you are on shared hosting
 
 == Donations ==
 
-Please use plugin's donate button on settings screen if you wish to donate, thank you.
+Buy the Pro version :)

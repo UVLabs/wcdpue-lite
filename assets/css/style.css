@@ -84,8 +84,8 @@ div#tld_wcdpue_metabox h2{
   padding: 10px;
 }
 
-/*=== Media Queries ===*/
-
+/*=== Media Queries ===
+Donation details
 @media screen and (max-width:1024px) {
 
   #tld-donation-wrap{
@@ -109,3 +109,4 @@ and (-webkit-min-device-pixel-ratio: 1) {
   }
 
 }
+*/

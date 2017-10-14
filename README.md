@@ -22,21 +22,6 @@ Customizable email body
 <img src="http://s32.postimg.org/y7nb8mhud/screenshot_4.png" />
 
 
-# Plans
-
-<ul>
-<em>Plugin options page for settings such as:</em><br />
-
-<li>CUSTOM SMTP (currently possible by using POSTMAN SMTP plugin or any other custom SMTP plugin, might not bother)</li>
-<li>CUSTOM HTML EMAILS</li>
-/**************/<br>
-</ul>
-
-<ul>
-<em>Better handling of emails</em><br />
-
-<li>Currently emails are sent within a loop on post save if "I Updated The Download File" is checked, this behaviour will be changed to add a schedule event for each email.</li>
-</ul>
 # How to install
 
-Download the folder inside the "plugin" directory of this repository and add it to your site via ftp, then go to plugins and click activate to activate plugin.
+Download latest Release from the Releases area on this repository and upload it to your WordPress website via Plugins->Add New.
