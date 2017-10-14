@@ -45,6 +45,8 @@ Take a look at the Pro version for more functionality including HTML Emails, Var
 
 * Removed redundant field on setting page
 * Removed immediately send option
+* Plugin now shows how many emails were scheduled
+* Plugin will not send the same email to an address even though they ordered the same product multiple times; customer will only get one email for that product.
 * Minor changes
 
 **1.1.6**
