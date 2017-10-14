@@ -9,7 +9,18 @@ Author URI: http://uriahsvictor.com
 License: GPL2
 */
 
+global $wpdb;
+
 defined( 'ABSPATH' ) or die( 'But why!?' );
+
+define ( 'TLD_WCDPUE_DB_PREFIX', $wpdb->prefix );
+
+define ( 'TLD_WCDPUE_DB_POSTS_TABLE', TLD_WCDPUE_DB_PREFIX . 'posts' );
+
+define ( 'TLD_WCDPUE_DLS_TABLE', TLD_WCDPUE_DB_PREFIX . 'woocommerce_downloadable_product_permissions' );
+
+define ( 'TLD_WCDPUE_SCHEDULED_TABLE', TLD_WCDPUE_DB_PREFIX . 'woocommerce_downloadable_product_emails_tld' );
+
 
 //table setup
 require_once dirname( __FILE__ ) . '/includes/tld-table-setup.php';
@@ -33,7 +44,7 @@ register_deactivation_hook( __FILE__, 'tld_wcdpue_deactivate_schedule');
 function tld_wcdpue_load_assets() {
 
   wp_enqueue_script( 'tld_wcdpue_uilang', plugin_dir_url( __FILE__ ) . 'assets/js/uilang.js' );
-  wp_enqueue_script( 'tld_wcdpue_scripts', plugin_dir_url( __FILE__ ) . 'assets/js/tld-scripts.js?v1.0.4' );
+  wp_enqueue_script( 'tld_wcdpue_scripts', plugin_dir_url( __FILE__ ) . 'assets/js/tld-scripts.js?v1.0.5' );
   wp_enqueue_style( 'tld_wcdpue_styles', plugin_dir_url( __FILE__ ) . 'assets/css/style.css?v1.1.8' );
 
 }
@@ -231,30 +242,14 @@ function tld_get_product_owners(){
         "
       );
 
-      //get our options
-
-      $tld_wcdpue_email_subject = esc_attr( get_option( 'tld-wcdpue-email-subject' ) );
-      $tld_wcdpue_email_body = esc_attr( get_option( 'tld-wcdpue-email-body' ) );
-
-      if ( empty( $tld_wcdpue_email_subject ) ){
-        $tld_wcdpue_email_subject = 'A product you bought has been updated!';
-      }
-
-      if ( empty( $tld_wcdpue_email_body ) ){
-        $tld_wcdpue_email_body = 'There is a new update for your product:';
-      }
-
-
-      $tld_wcdpue_account_url = esc_url ( get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) );
-
       foreach ( $tld_wcdpue_query_result as $tld_wcdpue_result ){
 
         if( ! in_array( $tld_wcdpue_result->user_email, $tld_wcdpue_no_spam ) ){
 
           $tld_wcdpue_buyer_email_address = $tld_wcdpue_result->user_email;
-          $tld_wcdpue_the_scheduling_table = $tld_wcdpue_tbl_prefix . 'woocommerce_downloadable_product_emails_tld';
+          $tld_wcdpue_the_scheduling_table = TLD_WCDPUE_SCHEDULED_TABLE;
           $wpdb->insert(
-            $tld_wcdpue_the_scheduling_table ,
+            $tld_wcdpue_the_scheduling_table,
             array(
 
               'id' => '',
@@ -267,7 +262,7 @@ function tld_get_product_owners(){
           $tld_wcdpue_emails_scheduled_count++;
 
         }
-        
+
         $tld_wcdpue_no_spam[] = $tld_wcdpue_result->user_email;
 
       }

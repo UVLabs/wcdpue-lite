@@ -37,9 +37,9 @@ jQuery( function($){
       // TODO: add if statement for if scheduled variable is more than one then output "emails" and if less output email
 
       if ( tld_wcdpue_emails_scheduled_count > 1 ){
-        document.getElementById( "tld-wcdpue-email-status" ).innerHTML = tld_wcdpue_emails_scheduled_count + " emails scheduled!";
+        document.getElementById( "tld-wcdpue-email-status" ).innerHTML = tld_wcdpue_emails_scheduled_count + " emails scheduled";
       }else{
-        document.getElementById( "tld-wcdpue-email-status" ).innerHTML = tld_wcdpue_emails_scheduled_count + " email scheduled!";
+        document.getElementById( "tld-wcdpue-email-status" ).innerHTML = tld_wcdpue_emails_scheduled_count + " email scheduled";
       }
 
       document.cookie = "tld-wcdpue-emails-scheduled-count = tld-wcdpue-emails-scheduled-count; expires=Thu, 01 Jan 1970 00:00:00 UTC";
