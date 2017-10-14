@@ -23,6 +23,7 @@ function tld_wcdpue_activate_schedule(){
 
     wp_schedule_event( time(), 'daily', 'tld_wcdpue_email_burst' );
     update_option( 'tld-wcdpue-schedule-setting-value', 'daily' );
+
   }
 
 }
@@ -63,7 +64,7 @@ function tld_wcdpue_send_schedule_mail(){
     $tld_wcdpue_home_url = esc_url( home_url() );
     $tld_wcdpue_buyer_email_address = $result->user_email;
     $tld_wcdpue_email_message = $tld_wcdpue_email_body . "\n\n";
-    $tld_wcdpue_email_message .= $tld_wcdpue_post_title . ": " . $tld_wcdpue_product_url . "\n\n" . $tld_wcdpue_account_url /*. "\n\n\n" . apply_filters( 'tld_wcdpue_plugin_creds', tld_wcdpue_get_creds() )*/;
+    $tld_wcdpue_email_message .= $tld_wcdpue_post_title . ": " . $tld_wcdpue_product_url . "\n\n" . $tld_wcdpue_account_url;
     wp_mail( $tld_wcdpue_buyer_email_address, $tld_wcdpue_email_subject, $tld_wcdpue_email_message );
     $wpdb->delete( $tld_wcdpue_the_scheduling_table, array( 'id' => $result->id ) );   //delete the current row in loop after mail sent
     sleep(2); //short breath, no rush.
