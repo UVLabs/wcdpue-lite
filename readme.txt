@@ -7,8 +7,8 @@ Author URI:        http://uriahsvictor.com
 Author:            Uriahs Victor
 Requires at least: 4.1
 Tested up to:      4.7
-Stable tag:        1.1.6
-Version:           1.1.6
+Stable tag:        1.1.7
+Version:           1.1.7
 License:           GPLv2 of later
 
 == Description ==
@@ -40,6 +40,14 @@ Take a look at the Pro version for more functionality including HTML Emails, Var
 5. Customable email body, more customization soon.
 
 == Changelog ==
+
+**1.1.7**
+
+* Removed redundant field on setting page
+* Removed immediately send option
+* Plugin now shows how many emails were scheduled
+* Plugin will not send the same email to an address even though they ordered the same product multiple times; customer will only get one email for that product.
+* Minor changes
 
 **1.1.6**
 

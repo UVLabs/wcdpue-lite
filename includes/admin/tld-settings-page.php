@@ -38,18 +38,6 @@ function tld_wcdpue_get_queue(){
 
   }
 
-  function tld_wcdpue_get_email_footer(){
-
-    $tld_wcdpue_email_footer = esc_attr( get_option('tld-wcdpue-email-footer') );
-
-    if( !empty( $tld_wcdpue_email_footer ) ){
-
-      echo $tld_wcdpue_email_footer;
-
-    }
-
-  }
-
   function tld_wcdpue_settings_page() {
     //page html
     ?>
@@ -77,14 +65,6 @@ function tld_wcdpue_get_queue(){
               <th scope="row">E-mail Body</th>
               <td>
                 <textarea name="tld-wcdpue-email-body" placeholder="There is a new update for your product" rows="8" cols="70"/><?php tld_wcdpue_get_email_body(); ?></textarea>
-              </td>
-            </tr>
-
-            <tr valign="top">
-              <th scope="row">E-mail Footer</th>
-              <td>
-                <span style="font-weight: bold; color: red; margin-bottom: 10px; font-size: 12px">THIS FOOTER OPTION WILL BE REMOVED IN THE NEXT VERSION, IT IS REDUNDANT. USE THE EMAIL BODY TEXT AREA TO CREATE YOUR EMAIL.</span>
-                <textarea name="tld-wcdpue-email-footer" placeholder="Log in to download it from your account now" rows="8" cols="70"/><?php tld_wcdpue_get_email_footer(); ?></textarea>
               </td>
             </tr>
 
@@ -149,7 +129,7 @@ function tld_wcdpue_get_queue(){
         </form>
       </div>
 
-      <div id="tld-donation-wrap">
+      <!-- <div id="tld-donation-wrap">
 
         <div id="tld-donation-container">
           <h1 id="tld-donation-header">Did my plugin help?</h1>
@@ -173,7 +153,7 @@ function tld_wcdpue_get_queue(){
 
         </div>
 
-      </div>
+      </div>-->
     </div>
 
 
@@ -184,7 +164,6 @@ function tld_wcdpue_get_queue(){
       //register our settings
       register_setting( 'tld-wcdpue-settings-group', 'tld-wcdpue-email-subject' );
       register_setting( 'tld-wcdpue-settings-group', 'tld-wcdpue-email-body' );
-      register_setting( 'tld-wcdpue-settings-group', 'tld-wcdpue-email-footer' );
       register_setting( 'tld-wcdpue-settings-group', 'tld-wcdpue-email-bursts-count' );
       register_setting( 'tld-wcdpue-settings-group', 'tld-wcdpue-schedule-setting-value' );
       register_setting( 'tld-wcdpue-settings-group', 'tld-wcdpue-delete-db-settings' );
