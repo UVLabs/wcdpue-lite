@@ -6,6 +6,8 @@ Description: Inform customers when there is an update to their WooCommerce downl
 Version: 1.1.7
 Author: Uriahs Victor
 Author URI: http://uriahsvictor.com
+WC requires at least: 2.6.0
+WC tested up to: 3.2.0
 License: GPL2
 */
 
@@ -274,4 +276,4 @@ function tld_get_product_owners(){
     setcookie("tld-wcdpue-cookie", "tld-switch-cookie", time() - 3600);
   }
 
-  add_action('save_post', 'tld_wcdpue_post_saved');
+  add_action('save_post_product', 'tld_wcdpue_post_saved');
