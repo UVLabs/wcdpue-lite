@@ -6,7 +6,7 @@ Tags:              woocommerce, emails, downloadable, products, update, schedule
 Author URI:        http://uriahsvictor.com
 Author:            Uriahs Victor
 Requires at least: 4.1
-Tested up to:      4.7
+Tested up to:      4.8
 Stable tag:        1.1.7
 Version:           1.1.7
 License:           GPLv2 of later
@@ -43,6 +43,7 @@ Take a look at the Pro version for more functionality including HTML Emails, Var
 
 **1.1.7**
 
+* Compatible with WooCommerce 3.2
 * Removed redundant field on setting page
 * Added clear queue button on settings page
 * Removed immediately send option
@@ -104,7 +105,7 @@ Take a look at the Pro version for more functionality including HTML Emails, Var
 
 = Email sends as wordpress.example.com =
 
-I used wp_mail in the plugin so you could easily override the default send from email using an SMTP plugin such as: https://wordpress.org/plugins/postman-smtp/
+I used wp_mail in the plugin so you could easily override the default send from email using an SMTP plugin such as: https://wordpress.org/plugins/post-smtp/
 
 = HTML Email Templates? =
 
