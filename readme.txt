@@ -6,9 +6,9 @@ Tags:              woocommerce, emails, downloadable, products, update, schedule
 Author URI:        http://uriahsvictor.com
 Author:            Uriahs Victor
 Requires at least: 4.1
-Tested up to:      4.8
-Stable tag:        1.1.7
-Version:           1.1.7
+Tested up to:      4.9
+Stable tag:        1.1.8
+Version:           1.1.8
 License:           GPLv2 of later
 
 == Description ==
@@ -40,6 +40,12 @@ Take a look at the Pro version for more functionality including HTML Emails, Var
 5. Customable email body, more customization soon.
 
 == Changelog ==
+
+**1.1.8**
+
+* Fixed an issue with the status message on the Metabox
+* Brought back send immediately option, user will have the option to control this in future versions
+* Tested on WP 4.9
 
 **1.1.7**
 
