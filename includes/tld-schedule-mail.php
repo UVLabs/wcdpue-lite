@@ -27,6 +27,7 @@ function tld_wcdpue_activate_schedule(){
   }
 
 }
+
 add_action( 'tld_wcdpue_email_burst', 'tld_wcdpue_send_schedule_mail' );
 
 function tld_wcdpue_send_schedule_mail(){

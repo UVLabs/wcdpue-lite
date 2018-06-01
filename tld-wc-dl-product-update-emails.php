@@ -24,6 +24,12 @@ define ( 'TLD_WCDPUE_DLS_TABLE', TLD_WCDPUE_DB_PREFIX . 'woocommerce_downloadabl
 define ( 'TLD_WCDPUE_SCHEDULED_TABLE', TLD_WCDPUE_DB_PREFIX . 'woocommerce_downloadable_product_emails_tld' );
 
 
+include dirname( __FILE__ ) . '/includes/classes/class-build-customers.php';
+
+include dirname( __FILE__ ) . '/includes/classes/class-build-email.php';
+
+include dirname( __FILE__ ) . '/includes/classes/class-email-processing.php';
+
 //table setup
 require_once dirname( __FILE__ ) . '/includes/tld-table-setup.php';
 
@@ -239,86 +245,17 @@ function tld_get_product_owners(){
       if ( wp_is_post_revision( $post_id ) || wp_is_post_autosave( $post_id ) )
       return;
 
-      global $wpdb;
-      $tld_wcdpue_tbl_prefix = $wpdb->prefix;
-      $tld_wcdpue_dls_table = $tld_wcdpue_tbl_prefix . 'woocommerce_downloadable_product_permissions';
-      $tld_wcdpue_query_result = $wpdb->get_results(
-        "SELECT DISTINCT product_id, order_id, order_key, user_email
-        FROM $tld_wcdpue_dls_table
-        WHERE ( product_id = $post_id )
-        AND (access_expires > NOW() OR access_expires IS NULL )
-        "
-      );
+      $mail = new sendEmail();
 
-      //get our options
-      $tld_wcdpue_email_subject = esc_attr( get_option( 'tld-wcdpue-email-subject' ) );
-      $tld_wcdpue_email_body = esc_attr( get_option( 'tld-wcdpue-email-body' ) );
-      if ( empty( $tld_wcdpue_email_subject ) ){
-        $tld_wcdpue_email_subject = 'A product you bought has been updated!';
-      }
-      if ( empty( $tld_wcdpue_email_body ) ){
-        $tld_wcdpue_email_body = 'There is a new update for your product:';
-      }
-
-      $tld_wcdpue_account_url = esc_url ( get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) );
       $tld_wcdpue_option_selected = $_POST['tld-option-selected'];
 
       if ( $tld_wcdpue_option_selected == 'immediately' ){
 
-
-        foreach ( $tld_wcdpue_query_result as $tld_wcdpue_result ){
-
-          $tld_wcdpue_email_address = $tld_wcdpue_result->user_email;
-
-          if( ! in_array( $tld_wcdpue_email_address, $tld_wcdpue_no_spam ) ){
-
-            $tld_wcdpue_post_title = get_the_title( $post_id );
-            $tld_wcdpue_product_url = esc_url( get_permalink( $post_id ) );
-            $tld_wcdpue_email_subject = $tld_wcdpue_email_subject;
-            $tld_wcdpue_email_message = $tld_wcdpue_email_body . "\n\n";
-            $tld_wcdpue_email_message .= $tld_wcdpue_post_title . ": " . $tld_wcdpue_product_url . "\n\n" . $tld_wcdpue_account_url;
-            wp_mail( $tld_wcdpue_email_address, $tld_wcdpue_email_subject, $tld_wcdpue_email_message );
-
-            $tld_wcdpue_emails_sent_count++;
-
-          }
-
-          $tld_wcdpue_no_spam[] = $tld_wcdpue_email_address;
-
-
-        }
-
-        setcookie( "tld-wcdpue-emails-sent-count", $tld_wcdpue_emails_sent_count );
-
+        $mail->send_email_immediately( $post_id );
 
       }else{
 
-        foreach ( $tld_wcdpue_query_result as $tld_wcdpue_result ){
-
-          if( ! in_array( $tld_wcdpue_result->user_email, $tld_wcdpue_no_spam ) ){
-
-            $tld_wcdpue_buyer_email_address = $tld_wcdpue_result->user_email;
-            $tld_wcdpue_the_scheduling_table = TLD_WCDPUE_SCHEDULED_TABLE;
-            $wpdb->insert(
-              $tld_wcdpue_the_scheduling_table,
-              array(
-
-                'id' => '',
-                'product_id' => $post_id,
-                'user_email' => $tld_wcdpue_buyer_email_address,
-
-              )
-            );
-
-            $tld_wcdpue_emails_scheduled_count++;
-
-          }
-
-          $tld_wcdpue_no_spam[] = $tld_wcdpue_result->user_email;
-
-        }
-        //create amount of emails scheduled cookie for JS
-        setcookie( "tld-wcdpue-emails-scheduled-count", $tld_wcdpue_emails_scheduled_count );
+        $mail->schedule_mail_instead( $post_id );
 
       }
       //delete our cookie since we're done with it
